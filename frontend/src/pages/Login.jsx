@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -39,6 +41,7 @@ export default function Login() {
       <input type="email" placeholder="Email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
       <input type="password" placeholder="Contraseña" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} />
       <button type="submit">Entrar</button>
+      <button type="button" onClick={() => navigate('/register')}>Registrarse</button>
       <div id="googleBtn" style={{ marginTop: '1rem' }}></div>
     </form>
   );
