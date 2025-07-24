@@ -12,6 +12,8 @@ export default function Login() {
       const res = await axios.post('http://localhost:5000/api/users/login', form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
+      localStorage.setItem('name', res.data.name);
+      localStorage.removeItem('picture');
       alert('Login exitoso');
       navigate('/');
     } catch (err) {
@@ -25,9 +27,12 @@ export default function Login() {
         client_id: 'YOUR_GOOGLE_CLIENT_ID',
         callback: async (response) => {
           try {
+            const decoded = JSON.parse(atob(response.credential.split('.')[1]));
+            localStorage.setItem('picture', decoded.picture);
             const res = await axios.post('http://localhost:5000/api/users/google-login', { token: response.credential });
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('role', res.data.role);
+            localStorage.setItem('name', res.data.name);
             alert('Login exitoso');
             navigate('/');
           } catch (err) {
