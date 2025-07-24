@@ -36,13 +36,43 @@ export default function Login() {
   }, []);
 
   return (
-    <form onSubmit={handleLogin}>
-      <h2>Iniciar Sesión</h2>
-      <input type="email" placeholder="Email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
-      <input type="password" placeholder="Contraseña" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} />
-      <button type="submit">Entrar</button>
-      <button type="button" onClick={() => navigate('/register')}>Registrarse</button>
-      <div id="googleBtn" style={{ marginTop: '1rem' }}></div>
-    </form>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-4">
+          <form onSubmit={handleLogin} className="p-4 border rounded bg-light">
+            <h2 className="mb-4 text-center">Iniciar Sesión</h2>
+            <div className="mb-3">
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Contraseña"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary w-100 mb-2">
+              Entrar
+            </button>
+            <button
+              type="button"
+              className="btn btn-link w-100"
+              onClick={() => navigate('/register')}
+            >
+              Registrarse
+            </button>
+            <div id="googleBtn" className="d-flex justify-content-center mt-3"></div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
