@@ -13,6 +13,7 @@ export default function Login() {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
       alert('Login exitoso');
+      navigate('/');
     } catch (err) {
       alert(err.response.data.message || 'Error al iniciar sesión');
     }
@@ -28,6 +29,7 @@ export default function Login() {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('role', res.data.role);
             alert('Login exitoso');
+            navigate('/');
           } catch (err) {
             alert(err.response?.data?.message || 'Error al iniciar sesi\u00f3n');
           }
