@@ -16,7 +16,7 @@ const generateToken = (id) => {
 
 // Registro de usuario
 router.post('/register', async (req, res) => {
-  const { name, email, password, confirmPassword, adminCode } = req.body;
+  const { name, email, password, confirmPassword, adminCode, avatar } = req.body;
   try {
     const exists = await User.findOne({ email });
     if (exists) return res.status(400).json({ message: 'El usuario ya existe' });
@@ -25,8 +25,8 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Las contrase\u00f1as no coinciden' });
     }
 
-    const role = adminCode && adminCode === process.env.ADMIN_CODE ? 'admin' : 'cliente';
-    const user = await User.create({ name, email, password, role });
+  const role = adminCode && adminCode === process.env.ADMIN_CODE ? 'admin' : 'cliente';
+  const user = await User.create({ name, email, password, role, avatar });
 
     const verifyToken = generateToken(user._id);
     const url = `${process.env.BASE_URL}/api/users/verify/${verifyToken}`;
@@ -84,6 +84,7 @@ router.post('/login', async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        avatar: user.avatar,
         token: generateToken(user._id),
       });
     } else {
@@ -106,9 +107,12 @@ router.post('/google-login', async (req, res) => {
 
   let user = await User.findOne({ email });
   if (!user) {
-    user = await User.create({ name, email, password: jwt.sign({ email }, process.env.JWT_SECRET), verified: true });
-  } else if (!user.verified) {
-    user.verified = true;
+    user = await User.create({ name, email, password: jwt.sign({ email }, process.env.JWT_SECRET), verified: true, avatar: payload.picture });
+  } else {
+    if (!user.verified) {
+      user.verified = true;
+    }
+    user.avatar = payload.picture;
     await user.save();
   }
 
@@ -117,10 +121,23 @@ router.post('/google-login', async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      avatar: user.avatar,
       token: generateToken(user._id),
     });
   } catch (err) {
     res.status(400).json({ message: 'Token de Google inválido' });
+  }
+});
+
+// Actualizar avatar de usuario
+router.put('/avatar', protect, async (req, res) => {
+  const { avatar } = req.body;
+  try {
+    req.user.avatar = avatar;
+    await req.user.save();
+    res.json({ avatar: req.user.avatar });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 

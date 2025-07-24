@@ -4,13 +4,13 @@ export default function Navbar() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const name = localStorage.getItem('name') || '';
-  const picture = localStorage.getItem('picture');
+  const avatar = localStorage.getItem('avatar');
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('name');
-    localStorage.removeItem('picture');
+    localStorage.removeItem('avatar');
     navigate('/login');
   };
 
@@ -28,8 +28,8 @@ export default function Navbar() {
               className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
               style={{ width: '40px', height: '40px' }}
             >
-              {picture ? (
-                <img src={picture} alt="Usuario" className="w-100 h-100" />
+              {avatar ? (
+                <img src={avatar} alt="Usuario" className="w-100 h-100" />
               ) : (
                 <span className="fw-bold">{initial}</span>
               )}

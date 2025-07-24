@@ -13,7 +13,7 @@ export default function Login() {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
       localStorage.setItem('name', res.data.name);
-      localStorage.removeItem('picture');
+      localStorage.setItem('avatar', res.data.avatar || '');
       alert('Login exitoso');
       navigate('/');
     } catch (err) {
@@ -28,11 +28,12 @@ export default function Login() {
         callback: async (response) => {
           try {
             const decoded = JSON.parse(atob(response.credential.split('.')[1]));
-            localStorage.setItem('picture', decoded.picture);
+            localStorage.setItem('avatar', decoded.picture);
             const res = await axios.post('http://localhost:5000/api/users/google-login', { token: response.credential });
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('role', res.data.role);
             localStorage.setItem('name', res.data.name);
+            localStorage.setItem('avatar', res.data.avatar || decoded.picture);
             alert('Login exitoso');
             navigate('/');
           } catch (err) {
