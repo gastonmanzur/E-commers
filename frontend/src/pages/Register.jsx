@@ -21,14 +21,61 @@ export default function Register() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Registro</h2>
-      <input placeholder="Nombre" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
-      <input type="email" placeholder="Email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
-      <input type="password" placeholder="Contraseña" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} />
-      <input type="password" placeholder="Confirmar contraseña" value={form.confirmPassword} onChange={e => setForm({ ...form, confirmPassword: e.target.value })} />
-      <button type="submit">Registrarse</button>
-      <button type="button" onClick={() => navigate('/login')}>Ya tienes cuenta</button>
-    </form>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-4">
+          <form onSubmit={handleSubmit} className="p-4 border rounded bg-light">
+            <h2 className="mb-4 text-center">Registro</h2>
+            <div className="mb-3">
+              <input
+                className="form-control"
+                placeholder="Nombre"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Contraseña"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Confirmar contraseña"
+                value={form.confirmPassword}
+                onChange={(e) =>
+                  setForm({ ...form, confirmPassword: e.target.value })
+                }
+              />
+            </div>
+            <button type="submit" className="btn btn-primary w-100 mb-2">
+              Registrarse
+            </button>
+            <button
+              type="button"
+              className="btn btn-link w-100"
+              onClick={() => navigate('/login')}
+            >
+              Ya tienes cuenta
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
