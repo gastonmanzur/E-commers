@@ -13,3 +13,5 @@ ADMIN_CODE=<código especial para crear administradores>
 
 Si al registrarse se proporciona un código que coincida con `ADMIN_CODE`, el usuario será creado con el rol de administrador.
 
+Tras registrarte recibirás un correo con un enlace para verificar tu cuenta. Hasta que no confirmes tu email no podrás iniciar sesión.
+
