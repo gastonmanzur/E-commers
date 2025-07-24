@@ -76,6 +76,9 @@ router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
+      if (!user.verified) {
+        return res.status(401).json({ message: 'Debes verificar tu email antes de iniciar sesión' });
+      }
       res.json({
         _id: user._id,
         name: user.name,
@@ -101,10 +104,13 @@ router.post('/google-login', async (req, res) => {
     const email = payload.email;
     const name = payload.name;
 
-    let user = await User.findOne({ email });
-    if (!user) {
-      user = await User.create({ name, email, password: jwt.sign({ email }, process.env.JWT_SECRET) });
-    }
+  let user = await User.findOne({ email });
+  if (!user) {
+    user = await User.create({ name, email, password: jwt.sign({ email }, process.env.JWT_SECRET), verified: true });
+  } else if (!user.verified) {
+    user.verified = true;
+    await user.save();
+  }
 
     res.json({
       _id: user._id,
