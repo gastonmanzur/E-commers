@@ -11,6 +11,11 @@ const userSchema = new mongoose.Schema({
     lowercase: true
   },
   password: { type: String, required: true },
+  role: {
+    type: String,
+    enum: ['cliente', 'admin'],
+    default: 'cliente'
+  },
   verified: { type: Boolean, default: false },
 }, {
   timestamps: true,
