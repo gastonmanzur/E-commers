@@ -15,3 +15,12 @@ Si al registrarse se proporciona un código que coincida con `ADMIN_CODE`, el us
 
 Tras registrarte recibirás un correo con un enlace para verificar tu cuenta. Hasta que no confirmes tu email no podrás iniciar sesión.
 
+## Ejecución del frontend
+
+Para evitar el aviso `Cross-Origin-Opener-Policy policy would block the window.postMessage call`, inicia el frontend con el servidor de desarrollo de Vite y no abras `index.html` directamente.
+
+```bash
+cd frontend
+npm run dev
+```
+
