@@ -11,6 +11,7 @@ export default function Login() {
     try {
       const res = await axios.post('http://localhost:5000/api/users/login', form);
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('role', res.data.role);
       alert('Login exitoso');
     } catch (err) {
       alert(err.response.data.message || 'Error al iniciar sesión');
@@ -25,6 +26,7 @@ export default function Login() {
           try {
             const res = await axios.post('http://localhost:5000/api/users/google-login', { token: response.credential });
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('role', res.data.role);
             alert('Login exitoso');
           } catch (err) {
             alert(err.response?.data?.message || 'Error al iniciar sesi\u00f3n');
