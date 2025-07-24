@@ -6,10 +6,9 @@ import Home from './pages/Home.jsx';
 import Navbar from './components/Navbar.jsx';
 
 export default function App() {
-  const token = localStorage.getItem('token');
   return (
     <Router>
-      {token && <Navbar />}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
