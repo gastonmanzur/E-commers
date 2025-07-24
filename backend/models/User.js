@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
     enum: ['cliente', 'admin'],
     default: 'cliente'
   },
+  avatar: { type: String, default: '' },
   verified: { type: Boolean, default: false },
 }, {
   timestamps: true,
