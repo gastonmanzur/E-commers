@@ -25,6 +25,21 @@ export default function Products() {
   const { addItem } = useContext(CartContext);
   const role = localStorage.getItem('role');
 
+  const uploadImage = async (file, field) => {
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.post('http://localhost:5000/api/upload', { data: reader.result },
+          { headers: { Authorization: `Bearer ${token}` } });
+        setEditForm(f => ({ ...f, [field]: res.data.url }));
+      } catch {
+        alert('Error al subir la imagen');
+      }
+    };
+    if (file) reader.readAsDataURL(file);
+  };
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const term = params.get('search') || '';
@@ -232,16 +247,19 @@ export default function Products() {
                       onChange={e => setEditForm({ ...editForm, price: e.target.value })} />
                   </div>
                   <div className="mb-2">
-                    <input className="form-control" placeholder="Imagen 1" value={editForm.image1}
-                      onChange={e => setEditForm({ ...editForm, image1: e.target.value })} />
+                    <input type="file" className="form-control" accept="image/*"
+                      onChange={e => uploadImage(e.target.files[0], 'image1')} />
+                    {editForm.image1 && <small className="text-muted">{editForm.image1}</small>}
                   </div>
                   <div className="mb-2">
-                    <input className="form-control" placeholder="Imagen 2" value={editForm.image2}
-                      onChange={e => setEditForm({ ...editForm, image2: e.target.value })} />
+                    <input type="file" className="form-control" accept="image/*"
+                      onChange={e => uploadImage(e.target.files[0], 'image2')} />
+                    {editForm.image2 && <small className="text-muted">{editForm.image2}</small>}
                   </div>
                   <div className="mb-2">
-                    <input className="form-control" placeholder="Imagen 3" value={editForm.image3}
-                      onChange={e => setEditForm({ ...editForm, image3: e.target.value })} />
+                    <input type="file" className="form-control" accept="image/*"
+                      onChange={e => uploadImage(e.target.files[0], 'image3')} />
+                    {editForm.image3 && <small className="text-muted">{editForm.image3}</small>}
                   </div>
                   <div className="mb-2">
                     <input className="form-control" placeholder="Categoría" value={editForm.category}

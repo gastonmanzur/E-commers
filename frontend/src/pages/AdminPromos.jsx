@@ -14,6 +14,21 @@ export default function AdminPromos() {
   });
   const navigate = useNavigate();
 
+  const uploadImage = async (file) => {
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.post('http://localhost:5000/api/upload', { data: reader.result },
+          { headers: { Authorization: `Bearer ${token}` } });
+        setForm(f => ({ ...f, image: res.data.url }));
+      } catch {
+        alert('Error al subir la imagen');
+      }
+    };
+    if (file) reader.readAsDataURL(file);
+  };
+
   useEffect(() => {
     axios.get('http://localhost:5000/api/products')
       .then(res => setProducts(res.data))
@@ -65,8 +80,9 @@ export default function AdminPromos() {
             onChange={e => setForm({ ...form, price: e.target.value })} />
         </div>
         <div className="mb-2">
-          <input className="form-control" placeholder="Imagen (opcional)" value={form.image}
-            onChange={e => setForm({ ...form, image: e.target.value })} />
+          <input type="file" className="form-control" accept="image/*"
+            onChange={e => uploadImage(e.target.files[0])} />
+          {form.image && <small className="text-muted">{form.image}</small>}
         </div>
         <div className="form-check mb-2">
           <input className="form-check-input" type="checkbox" id="activePromo" checked={form.active}

@@ -15,6 +15,10 @@ Si al registrarse se proporciona un código que coincida con `ADMIN_CODE`, el us
 
 Tras registrarte recibirás un correo con un enlace para verificar tu cuenta. Hasta que no confirmes tu email no podrás iniciar sesión.
 
+## Subida de imágenes
+
+Los administradores pueden subir imágenes de productos y promociones mediante el endpoint `/api/upload`. Envía un objeto JSON con el campo `data` que contenga la imagen en formato Base64. El servicio responde con la URL que debes guardar en el producto o promoción.
+
 ## Ejecución del frontend
 
 Para evitar el aviso `Cross-Origin-Opener-Policy policy would block the window.postMessage call`, inicia el frontend con el servidor de desarrollo de Vite y no abras `index.html` directamente.
