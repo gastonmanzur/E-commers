@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
   },
   category: String,
   inStock: { type: Boolean, default: true },
+  stock: { type: Number, default: 0 },
 }, {
   timestamps: true,
 });

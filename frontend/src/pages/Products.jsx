@@ -5,6 +5,7 @@ import CartContext from '../context/CartContext.jsx';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
+  const [quantities, setQuantities] = useState({});
   const navigate = useNavigate();
   const { addItem } = useContext(CartContext);
 
@@ -13,6 +14,18 @@ export default function Products() {
       .then(res => setProducts(res.data))
       .catch(() => alert('Error al obtener productos'));
   }, []);
+
+  const handleAdd = async (prod) => {
+    const qty = Number(quantities[prod._id] || 1);
+    if (qty <= 0) return;
+    if (qty > prod.stock) {
+      alert('No hay suficiente stock');
+      return;
+    }
+    await addItem(prod, qty);
+    setProducts(prev => prev.map(p => p._id === prod._id ? { ...p, stock: p.stock - qty } : p));
+    setQuantities(q => ({ ...q, [prod._id]: 1 }));
+  };
 
   return (
     <div className="container mt-4">
@@ -47,12 +60,18 @@ export default function Products() {
               <div className="card-body">
                 <h5 className="card-title">{prod.name}</h5>
                 <p className="card-text">${prod.price}</p>
+                <p className="card-text">Stock: {prod.stock}</p>
+                <div className="input-group mb-2">
+                  <input type="number" min="1" className="form-control" style={{maxWidth:'80px'}}
+                    value={quantities[prod._id] || 1}
+                    onChange={e => setQuantities(q => ({ ...q, [prod._id]: e.target.value }))} onClick={e=>e.stopPropagation()} />
+                </div>
                 <button
                   type="button"
                   className="btn btn-primary"
                   onClick={e => {
                     e.stopPropagation();
-                    addItem(prod);
+                    handleAdd(prod);
                   }}
                 >
                   Agregar al carrito
