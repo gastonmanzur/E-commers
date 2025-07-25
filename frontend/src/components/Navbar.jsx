@@ -97,70 +97,70 @@ export default function Navbar() {
               </li>
             )}
           </ul>
-          <form
-            className="d-flex me-lg-3 mb-2 mb-lg-0"
-            onSubmit={handleSearch}
-          >
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Buscar"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Buscar
-            </button>
-          </form>
-          <Link
-            className="position-relative me-lg-3 mb-2 mb-lg-0"
-            to="/cart"
-          >
-            <i className="bi bi-cart" style={{ fontSize: '1.2rem' }} />
-            {cartCount > 0 && (
-              <span
-                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                style={{ fontSize: '0.6rem' }}
-              >
-                {cartCount}
-              </span>
-            )}
-          </Link>
-          {token && (
-            <div className="d-flex align-items-center">
-              <div
-                className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  border: '1px solid black',
-                  cursor: 'pointer',
-                }}
-                onClick={handleAvatarClick}
-              >
-                {avatar ? (
-                  <img src={avatar} alt="Usuario" className="w-100 h-100" />
-                ) : (
-                  <span className="fw-bold">{initial}</span>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  className="d-none"
-                />
-              </div>
-              <button
-                type="button"
-                className="btn btn-outline-secondary btn-sm mb-2 mb-lg-0"
-                onClick={handleLogout}
-              >
-                Cerrar sesión
-              </button>
-            </div>
-          )}
         </div>
+        <form
+          className="d-flex me-lg-3 mb-2 mb-lg-0"
+          onSubmit={handleSearch}
+        >
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Buscar"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button className="btn btn-outline-success" type="submit">
+            Buscar
+          </button>
+        </form>
+        <Link
+          className="position-relative me-lg-3 mb-2 mb-lg-0"
+          to="/cart"
+        >
+          <i className="bi bi-cart" style={{ fontSize: '1.2rem' }} />
+          {cartCount > 0 && (
+            <span
+              className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              style={{ fontSize: '0.6rem' }}
+            >
+              {cartCount}
+            </span>
+          )}
+        </Link>
+        {token && (
+          <div className="d-flex align-items-center">
+            <div
+              className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
+              style={{
+                width: '40px',
+                height: '40px',
+                border: '1px solid black',
+                cursor: 'pointer',
+              }}
+              onClick={handleAvatarClick}
+            >
+              {avatar ? (
+                <img src={avatar} alt="Usuario" className="w-100 h-100" />
+              ) : (
+                <span className="fw-bold">{initial}</span>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                className="d-none"
+              />
+            </div>
+            <button
+              type="button"
+              className="btn btn-outline-secondary btn-sm mb-2 mb-lg-0"
+              onClick={handleLogout}
+            >
+              Cerrar sesión
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
