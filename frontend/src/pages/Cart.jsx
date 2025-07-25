@@ -16,8 +16,18 @@ export default function Cart() {
           <ul className="list-group mb-3">
             {items.map((item, idx) => (
               <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  {item.product.name} x {item.quantity}
+                <div className="d-flex align-items-center">
+                  {item.product.images && item.product.images.length > 0 && (
+                    <img
+                      src={item.product.images[Math.floor(Math.random() * item.product.images.length)]}
+                      alt={item.product.name}
+                      style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+                      className="me-2"
+                    />
+                  )}
+                  <span>
+                    {item.product.name} x {item.quantity}
+                  </span>
                 </div>
                 <div>
                   <span className="me-2">${item.product.price * item.quantity}</span>
