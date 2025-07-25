@@ -8,7 +8,17 @@ const router = express.Router();
 // Obtener todos los productos
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find();
+    const { search } = req.query;
+    const filter = search
+      ? {
+          $or: [
+            { name: { $regex: search, $options: 'i' } },
+            { description: { $regex: search, $options: 'i' } },
+            { category: { $regex: search, $options: 'i' } },
+          ],
+        }
+      : {};
+    const products = await Product.find(filter);
     res.json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });
