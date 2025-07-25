@@ -64,6 +64,7 @@ export default function Navbar() {
           {role === 'admin' && (
             <Link className="me-3" to="/add-product">Agregar producto</Link>
           )}
+          <Link className="me-3" to="/cart">Mi carrito</Link>
         </div>
         {token && (
           <div className="d-flex align-items-center">
