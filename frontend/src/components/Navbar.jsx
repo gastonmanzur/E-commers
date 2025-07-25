@@ -64,37 +64,41 @@ export default function Navbar() {
           {role === 'admin' && (
             <Link className="me-3" to="/add-product">Agregar producto</Link>
           )}
-          <Link className="me-3" to="/cart">Mi carrito</Link>
         </div>
-        {token && (
-          <div className="d-flex align-items-center">
-            <div
-              className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
-              style={{ width: '40px', height: '40px', border: '1px solid black', cursor: 'pointer' }}
-              onClick={handleAvatarClick}
-            >
-              {avatar ? (
-                <img src={avatar} alt="Usuario" className="w-100 h-100" />
-              ) : (
-                <span className="fw-bold">{initial}</span>
-              )}
-              <input
-                type="file"
-                accept="image/*"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                className="d-none"
-              />
-            </div>
-            <button
-              type="button"
-              className="btn btn-outline-secondary btn-sm"
-              onClick={handleLogout}
-            >
-              Cerrar sesión
-            </button>
-          </div>
-        )}
+        <div className="d-flex align-items-center">
+          <Link className="me-3" to="/cart">
+            <i className="bi bi-cart" style={{ fontSize: '1.2rem' }} />
+          </Link>
+          {token && (
+            <>
+              <div
+                className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
+                style={{ width: '40px', height: '40px', border: '1px solid black', cursor: 'pointer' }}
+                onClick={handleAvatarClick}
+              >
+                {avatar ? (
+                  <img src={avatar} alt="Usuario" className="w-100 h-100" />
+                ) : (
+                  <span className="fw-bold">{initial}</span>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  className="d-none"
+                />
+              </div>
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-sm"
+                onClick={handleLogout}
+              >
+                Cerrar sesión
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );
