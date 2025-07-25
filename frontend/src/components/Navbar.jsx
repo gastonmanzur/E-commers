@@ -90,11 +90,18 @@ export default function Navbar() {
               </Link>
             </li>
             {role === 'admin' && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/add-product">
-                  Agregar producto
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/add-product">
+                    Agregar producto
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/admin/promos">
+                    Promociones
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
           {token && (
