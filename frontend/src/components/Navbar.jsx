@@ -12,6 +12,15 @@ export default function Navbar() {
   const [avatar, setAvatar] = useState(storedAvatar);
   const fileInputRef = useRef(null);
   const { items } = useContext(CartContext);
+  const [search, setSearch] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (search.trim()) {
+      navigate(`/products?search=${encodeURIComponent(search.trim())}`);
+      setSearch('');
+    }
+  };
 
   useEffect(() => {
     const stored = localStorage.getItem('avatar');
@@ -67,6 +76,18 @@ export default function Navbar() {
           {role === 'admin' && (
             <Link className="me-3" to="/add-product">Agregar producto</Link>
           )}
+          <form className="d-flex" onSubmit={handleSearch}>
+            <input
+              className="form-control me-2"
+              type="search"
+              placeholder="Buscar"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button className="btn btn-outline-success" type="submit">
+              Buscar
+            </button>
+          </form>
         </div>
         <div className="d-flex align-items-center">
           <Link className="position-relative me-3" to="/cart">

@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import CartContext from '../context/CartContext.jsx';
 
 export default function Products() {
@@ -21,14 +21,20 @@ export default function Products() {
   const [stockProduct, setStockProduct] = useState(null);
   const [newStock, setNewStock] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
   const { addItem } = useContext(CartContext);
   const role = localStorage.getItem('role');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products')
-      .then(res => setProducts(res.data))
+    const params = new URLSearchParams(location.search);
+    const term = params.get('search') || '';
+    axios
+      .get('http://localhost:5000/api/products', {
+        params: term ? { search: term } : {},
+      })
+      .then((res) => setProducts(res.data))
       .catch(() => alert('Error al obtener productos'));
-  }, []);
+  }, [location.search]);
 
   const handleAdd = async (prod) => {
     const qty = Number(quantities[prod._id] || 1);
