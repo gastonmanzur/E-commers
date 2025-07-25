@@ -58,4 +58,52 @@ router.patch('/:id/stock', async (req, res) => {
   }
 });
 
+// Actualizar un producto
+router.put('/:id', protect, isAdmin, async (req, res) => {
+  const { name, description, price, images = [], category, inStock, stock } = req.body;
+  if (images.length > 3) return res.status(400).json({ message: 'Máximo 3 imágenes' });
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Producto no encontrado' });
+    product.name = name;
+    product.description = description;
+    product.price = price;
+    product.images = images;
+    product.category = category;
+    product.inStock = inStock;
+    if (stock !== undefined) product.stock = stock;
+    const updated = await product.save();
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Establecer el stock de un producto
+router.put('/:id/stock', protect, isAdmin, async (req, res) => {
+  const { stock } = req.body;
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Producto no encontrado' });
+    if (stock < 0) return res.status(400).json({ message: 'El stock no puede ser negativo' });
+    product.stock = stock;
+    const updated = await product.save();
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Eliminar un producto
+router.delete('/:id', protect, isAdmin, async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Producto no encontrado' });
+    await product.deleteOne();
+    res.json({ message: 'Producto eliminado' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 export default router;
