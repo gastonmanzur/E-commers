@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function Navbar() {
@@ -10,11 +10,17 @@ export default function Navbar() {
   const [avatar, setAvatar] = useState(storedAvatar);
   const fileInputRef = useRef(null);
 
+  useEffect(() => {
+    const stored = localStorage.getItem('avatar');
+    setAvatar(stored || '');
+  }, [token]);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('name');
     localStorage.removeItem('avatar');
+    setAvatar('');
     navigate('/login');
   };
 
