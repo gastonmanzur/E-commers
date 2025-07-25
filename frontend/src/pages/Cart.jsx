@@ -1,8 +1,10 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CartContext from '../context/CartContext.jsx';
 
 export default function Cart() {
   const { items, total, removeItem } = useContext(CartContext);
+  const navigate = useNavigate();
 
   return (
     <div className="container mt-4">
@@ -27,6 +29,18 @@ export default function Cart() {
           <h4>Total: ${total}</h4>
         </>
       )}
+      <div className="mt-3">
+        <button type="button" className="btn btn-primary me-2">
+          Comprar Carrito
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => navigate('/')}
+        >
+          Seguir Comprando
+        </button>
+      </div>
     </div>
   );
 }
