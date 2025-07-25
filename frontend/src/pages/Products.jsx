@@ -121,7 +121,7 @@ export default function Products() {
       <div className="row">
         {products.map(prod => (
           <div className="col-md-4 mb-3" key={prod._id}>
-            <div className="card h-100" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${prod._id}`)}>
+            <div className="card h-100 product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${prod._id}`)}>
               {prod.images && prod.images.length > 0 && (
                 <div id={`carousel-${prod._id}`} className="carousel slide">
                   <div className="carousel-inner">
