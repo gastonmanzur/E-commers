@@ -12,6 +12,7 @@ export default function AddProduct() {
     image3: '',
     category: '',
     inStock: true,
+    stock: 0,
   });
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ export default function AddProduct() {
         images,
         category: form.category,
         inStock: form.inStock,
+        stock: Number(form.stock),
       }, { headers: { Authorization: `Bearer ${token}` } });
       alert('Producto creado');
       navigate('/products');
@@ -66,6 +68,10 @@ export default function AddProduct() {
         <div className="mb-3">
           <input className="form-control" placeholder="Categoría" value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })} />
+        </div>
+        <div className="mb-3">
+          <input type="number" className="form-control" placeholder="Stock" value={form.stock}
+            onChange={(e) => setForm({ ...form, stock: e.target.value })} />
         </div>
         <div className="form-check mb-3">
           <input className="form-check-input" type="checkbox" checked={form.inStock}

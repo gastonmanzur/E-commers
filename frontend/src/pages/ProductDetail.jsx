@@ -18,6 +18,7 @@ export default function ProductDetail() {
     <div className="container mt-5">
       <h2>{product.name}</h2>
       <p className="text-muted">${product.price}</p>
+      <p className="text-muted">Stock: {product.stock}</p>
       <p>{product.description}</p>
       <div className="d-flex flex-wrap">
         {product.images && product.images.map((img, idx) => (
