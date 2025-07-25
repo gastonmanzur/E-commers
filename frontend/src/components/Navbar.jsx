@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
+import CartContext from '../context/CartContext.jsx';
 import axios from 'axios';
 
 export default function Navbar() {
@@ -10,6 +11,7 @@ export default function Navbar() {
   const storedAvatar = localStorage.getItem('avatar');
   const [avatar, setAvatar] = useState(storedAvatar);
   const fileInputRef = useRef(null);
+  const { items } = useContext(CartContext);
 
   useEffect(() => {
     const stored = localStorage.getItem('avatar');
@@ -52,6 +54,7 @@ export default function Navbar() {
   };
 
   const initial = name.charAt(0).toUpperCase();
+  const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
     <nav className="navbar navbar-light bg-light">
@@ -66,8 +69,16 @@ export default function Navbar() {
           )}
         </div>
         <div className="d-flex align-items-center">
-          <Link className="me-3" to="/cart">
+          <Link className="position-relative me-3" to="/cart">
             <i className="bi bi-cart" style={{ fontSize: '1.2rem' }} />
+            {cartCount > 0 && (
+              <span
+                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style={{ fontSize: '0.6rem' }}
+              >
+                {cartCount}
+              </span>
+            )}
           </Link>
           {token && (
             <>
