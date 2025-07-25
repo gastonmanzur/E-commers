@@ -16,6 +16,21 @@ export default function AddProduct() {
   });
   const navigate = useNavigate();
 
+  const uploadImage = async (file, field) => {
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.post('http://localhost:5000/api/upload', { data: reader.result },
+          { headers: { Authorization: `Bearer ${token}` } });
+        setForm(f => ({ ...f, [field]: res.data.url }));
+      } catch {
+        alert('Error al subir la imagen');
+      }
+    };
+    if (file) reader.readAsDataURL(file);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
@@ -54,16 +69,19 @@ export default function AddProduct() {
             onChange={(e) => setForm({ ...form, price: e.target.value })} />
         </div>
         <div className="mb-3">
-          <input className="form-control" placeholder="Imagen 1" value={form.image1}
-            onChange={(e) => setForm({ ...form, image1: e.target.value })} />
+          <input type="file" className="form-control" accept="image/*"
+            onChange={e => uploadImage(e.target.files[0], 'image1')} />
+          {form.image1 && <small className="text-muted">{form.image1}</small>}
         </div>
         <div className="mb-3">
-          <input className="form-control" placeholder="Imagen 2" value={form.image2}
-            onChange={(e) => setForm({ ...form, image2: e.target.value })} />
+          <input type="file" className="form-control" accept="image/*"
+            onChange={e => uploadImage(e.target.files[0], 'image2')} />
+          {form.image2 && <small className="text-muted">{form.image2}</small>}
         </div>
         <div className="mb-3">
-          <input className="form-control" placeholder="Imagen 3" value={form.image3}
-            onChange={(e) => setForm({ ...form, image3: e.target.value })} />
+          <input type="file" className="form-control" accept="image/*"
+            onChange={e => uploadImage(e.target.files[0], 'image3')} />
+          {form.image3 && <small className="text-muted">{form.image3}</small>}
         </div>
         <div className="mb-3">
           <input className="form-control" placeholder="Categoría" value={form.category}
