@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 export default function Profile() {
   const [user, setUser] = useState(null);
   const [avatar, setAvatar] = useState('');
   const [message, setMessage] = useState('');
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -31,6 +32,22 @@ export default function Profile() {
     }
   };
 
+  const handleImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setAvatar(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div>
       <h2>Perfil</h2>
@@ -38,8 +55,21 @@ export default function Profile() {
         <div>
           <div className="mb-3">
             {avatar && (
-              <img src={avatar} alt="Avatar" style={{ width: '100px', height: '100px' }} />
+              <div
+                className="rounded-circle overflow-hidden"
+                style={{ width: '100px', height: '100px', border: '1px solid black', cursor: 'pointer' }}
+                onClick={handleImageClick}
+              >
+                <img src={avatar} alt="Avatar" className="w-100 h-100" />
+              </div>
             )}
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="d-none"
+            />
           </div>
           <input
             type="text"
