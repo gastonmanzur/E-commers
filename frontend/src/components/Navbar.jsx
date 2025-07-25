@@ -5,6 +5,7 @@ import axios from 'axios';
 export default function Navbar() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
   const name = localStorage.getItem('name') || '';
   const storedAvatar = localStorage.getItem('avatar');
   const [avatar, setAvatar] = useState(storedAvatar);
@@ -55,9 +56,15 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="container d-flex justify-content-between">
-        <Link className="navbar-brand" to="/">
-          Ana<strong>Roma</strong>
-        </Link>
+        <div className="d-flex align-items-center">
+          <Link className="navbar-brand me-3" to="/">
+            Ana<strong>Roma</strong>
+          </Link>
+          <Link className="me-3" to="/products">Productos</Link>
+          {role === 'admin' && (
+            <Link className="me-3" to="/add-product">Agregar producto</Link>
+          )}
+        </div>
         {token && (
           <div className="d-flex align-items-center">
             <div
