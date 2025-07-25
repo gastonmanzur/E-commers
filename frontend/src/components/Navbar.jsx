@@ -97,6 +97,15 @@ export default function Navbar() {
               </li>
             )}
           </ul>
+          {token && (
+            <button
+              type="button"
+              className="btn btn-outline-secondary btn-sm mb-2 mb-lg-0"
+              onClick={handleLogout}
+            >
+              Cerrar sesión
+            </button>
+          )}
         </div>
         <form
           className="d-flex me-lg-3 mb-2 mb-lg-0"
@@ -152,13 +161,6 @@ export default function Navbar() {
                 className="d-none"
               />
             </div>
-            <button
-              type="button"
-              className="btn btn-outline-secondary btn-sm mb-2 mb-lg-0"
-              onClick={handleLogout}
-            >
-              Cerrar sesión
-            </button>
           </div>
         )}
       </div>
