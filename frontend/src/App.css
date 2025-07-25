@@ -36,6 +36,11 @@
   padding: 2em;
 }
 
+.product-card {
+  transform: scale(0.7);
+  transform-origin: top left;
+}
+
 .read-the-docs {
   color: #888;
 }
