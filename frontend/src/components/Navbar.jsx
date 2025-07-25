@@ -66,17 +66,41 @@ export default function Navbar() {
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <nav className="navbar navbar-light bg-light">
-      <div className="container d-flex justify-content-between">
-        <div className="d-flex align-items-center">
-          <Link className="navbar-brand me-3" to="/">
-            Ana<strong>Roma</strong>
-          </Link>
-          <Link className="me-3" to="/products">Productos</Link>
-          {role === 'admin' && (
-            <Link className="me-3" to="/add-product">Agregar producto</Link>
-          )}
-          <form className="d-flex" onSubmit={handleSearch}>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container">
+        <Link className="navbar-brand" to="/">
+          Ana<strong>Roma</strong>
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link className="nav-link" to="/products">
+                Productos
+              </Link>
+            </li>
+            {role === 'admin' && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/add-product">
+                  Agregar producto
+                </Link>
+              </li>
+            )}
+          </ul>
+          <form
+            className="d-flex me-lg-3 mb-2 mb-lg-0"
+            onSubmit={handleSearch}
+          >
             <input
               className="form-control me-2"
               type="search"
@@ -88,9 +112,10 @@ export default function Navbar() {
               Buscar
             </button>
           </form>
-        </div>
-        <div className="d-flex align-items-center">
-          <Link className="position-relative me-3" to="/cart">
+          <Link
+            className="position-relative me-lg-3 mb-2 mb-lg-0"
+            to="/cart"
+          >
             <i className="bi bi-cart" style={{ fontSize: '1.2rem' }} />
             {cartCount > 0 && (
               <span
@@ -102,10 +127,15 @@ export default function Navbar() {
             )}
           </Link>
           {token && (
-            <>
+            <div className="d-flex align-items-center">
               <div
                 className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
-                style={{ width: '40px', height: '40px', border: '1px solid black', cursor: 'pointer' }}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  border: '1px solid black',
+                  cursor: 'pointer',
+                }}
                 onClick={handleAvatarClick}
               >
                 {avatar ? (
@@ -123,12 +153,12 @@ export default function Navbar() {
               </div>
               <button
                 type="button"
-                className="btn btn-outline-secondary btn-sm"
+                className="btn btn-outline-secondary btn-sm mb-2 mb-lg-0"
                 onClick={handleLogout}
               >
                 Cerrar sesión
               </button>
-            </>
+            </div>
           )}
         </div>
       </div>
