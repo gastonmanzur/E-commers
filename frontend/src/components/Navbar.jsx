@@ -5,14 +5,26 @@ import axios from 'axios';
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
-  const name = localStorage.getItem('name') || '';
-  const storedAvatar = localStorage.getItem('avatar');
-  const [avatar, setAvatar] = useState(storedAvatar);
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [role, setRole] = useState(localStorage.getItem('role'));
+  const [name, setName] = useState(localStorage.getItem('name') || '');
+  const [avatar, setAvatar] = useState(localStorage.getItem('avatar') || '');
   const fileInputRef = useRef(null);
   const { items } = useContext(CartContext);
   const [search, setSearch] = useState('');
+
+  // Sync component state with localStorage when user logs in or out
+  useEffect(() => {
+    const handler = () => {
+      setToken(localStorage.getItem('token'));
+      setRole(localStorage.getItem('role'));
+      setName(localStorage.getItem('name') || '');
+      setAvatar(localStorage.getItem('avatar') || '');
+    };
+    handler();
+    window.addEventListener('userchange', handler);
+    return () => window.removeEventListener('userchange', handler);
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -38,6 +50,9 @@ export default function Navbar() {
     localStorage.removeItem('avatar');
     localStorage.removeItem('userId');
     setAvatar('');
+    setToken(null);
+    setRole(null);
+    setName('');
     clearCart();
     window.dispatchEvent(new Event('userchange'));
     navigate('/login');
