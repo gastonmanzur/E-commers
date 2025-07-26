@@ -27,12 +27,21 @@ export default function Navbar() {
     setAvatar(stored || '');
   }, [token]);
 
+  const { clearCart } = useContext(CartContext);
+
   const handleLogout = () => {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      localStorage.removeItem(`cart_${userId}`);
+    }
+    clearCart();
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('name');
     localStorage.removeItem('avatar');
+    localStorage.removeItem('userId');
     setAvatar('');
+    window.dispatchEvent(new Event('userchange'));
     navigate('/login');
   };
 
