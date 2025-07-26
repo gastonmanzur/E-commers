@@ -14,6 +14,8 @@ export default function Login() {
       localStorage.setItem('role', res.data.role);
       localStorage.setItem('name', res.data.name);
       localStorage.setItem('avatar', res.data.avatar || '');
+      localStorage.setItem('userId', res.data._id);
+      window.dispatchEvent(new Event('userchange'));
       alert('Login exitoso');
       navigate('/');
     } catch (err) {
@@ -34,6 +36,8 @@ export default function Login() {
             localStorage.setItem('role', res.data.role);
             localStorage.setItem('name', res.data.name);
             localStorage.setItem('avatar', res.data.avatar || decoded.picture);
+            localStorage.setItem('userId', res.data._id);
+            window.dispatchEvent(new Event('userchange'));
             alert('Login exitoso');
             navigate('/');
           } catch (err) {
