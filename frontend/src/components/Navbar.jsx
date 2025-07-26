@@ -30,17 +30,15 @@ export default function Navbar() {
   const { clearCart } = useContext(CartContext);
 
   const handleLogout = () => {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      localStorage.removeItem(`cart_${userId}`);
-    }
-    clearCart();
+    // Preserve the user's cart by keeping the cart_<id> entry in localStorage
+    // Clear the current session and switch to an empty guest cart
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('name');
     localStorage.removeItem('avatar');
     localStorage.removeItem('userId');
     setAvatar('');
+    clearCart();
     window.dispatchEvent(new Event('userchange'));
     navigate('/login');
   };
