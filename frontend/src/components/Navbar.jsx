@@ -123,6 +123,11 @@ export default function Navbar() {
                     Promociones
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/admin/orders">
+                    Órdenes
+                  </Link>
+                </li>
               </>
             )}
           </ul>

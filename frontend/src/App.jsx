@@ -7,6 +7,7 @@ import Products from './pages/Products.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
 import AddProduct from './pages/AddProduct.jsx';
 import AdminPromos from './pages/AdminPromos.jsx';
+import AdminOrders from './pages/AdminOrders.jsx';
 import Cart from './pages/Cart.jsx';
 import Navbar from './components/Navbar.jsx';
 import { CartProvider } from './context/CartContext.jsx';
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/admin/promos" element={<AdminPromos />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
       </Router>

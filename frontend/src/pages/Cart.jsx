@@ -1,10 +1,26 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CartContext from '../context/CartContext.jsx';
+import axios from 'axios';
 
 export default function Cart() {
-  const { items, total, removeItem } = useContext(CartContext);
+  const { items, total, removeItem, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
+
+  const handlePurchase = async () => {
+    if (items.length === 0) return;
+    const token = localStorage.getItem('token');
+    try {
+      await axios.post('http://localhost:5000/api/orders', {
+        items: items.map(i => ({ product: i.product._id, quantity: i.quantity }))
+      }, { headers: { Authorization: `Bearer ${token}` } });
+      alert('Orden creada');
+      clearCart();
+      navigate('/');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Error al crear orden');
+    }
+  };
 
   return (
     <div className="container mt-4">
@@ -40,7 +56,7 @@ export default function Cart() {
         </>
       )}
       <div className="mt-3">
-        <button type="button" className="btn btn-primary me-2">
+        <button type="button" className="btn btn-primary me-2" onClick={handlePurchase}>
           Comprar Carrito
         </button>
         <button

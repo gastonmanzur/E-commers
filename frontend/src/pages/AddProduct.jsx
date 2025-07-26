@@ -11,6 +11,7 @@ export default function AddProduct() {
     image2: '',
     image3: '',
     category: '',
+    gender: 'unisex',
     inStock: true,
     stock: 0,
   });
@@ -42,6 +43,7 @@ export default function AddProduct() {
         price: Number(form.price),
         images,
         category: form.category,
+        gender: form.gender,
         inStock: form.inStock,
         stock: Number(form.stock),
       }, { headers: { Authorization: `Bearer ${token}` } });
@@ -86,6 +88,14 @@ export default function AddProduct() {
         <div className="mb-3">
           <input className="form-control" placeholder="Categoría" value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })} />
+        </div>
+        <div className="mb-3">
+          <select className="form-select" value={form.gender}
+            onChange={e => setForm({ ...form, gender: e.target.value })}>
+            <option value="unisex">Unisex</option>
+            <option value="femenino">Para Ella</option>
+            <option value="masculino">Para Él</option>
+          </select>
         </div>
         <div className="mb-3">
           <input type="number" className="form-control" placeholder="Stock" value={form.stock}
