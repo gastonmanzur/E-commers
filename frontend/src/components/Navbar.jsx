@@ -22,7 +22,7 @@ export default function Navbar() {
         <Link className="navbar-brand" to="/">
           Ana<strong>Roma</strong>
         </Link>
-        {token && (
+        {token ? (
           <div className="d-flex align-items-center">
             <div
               className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
@@ -42,6 +42,14 @@ export default function Navbar() {
               Cerrar sesión
             </button>
           </div>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-sm"
+            onClick={() => navigate('/login')}
+          >
+            Iniciar sesión
+          </button>
         )}
       </div>
     </nav>
