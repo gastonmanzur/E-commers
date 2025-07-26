@@ -17,7 +17,8 @@ router.post('/', protect, isAdmin, (req, res) => {
     if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
     const filename = `${Date.now()}.${ext}`;
     fs.writeFileSync(path.join('uploads', filename), buffer);
-    res.json({ url: `/uploads/${filename}` });
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
+    res.json({ url: `${baseUrl}/uploads/${filename}` });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
