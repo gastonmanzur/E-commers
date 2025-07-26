@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Register from './pages/Register.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
@@ -13,10 +14,18 @@ import Navbar from './components/Navbar.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 
 export default function App() {
+  const [token, setToken] = useState(localStorage.getItem('token'));
+
+  useEffect(() => {
+    const handler = () => setToken(localStorage.getItem('token'));
+    window.addEventListener('userchange', handler);
+    return () => window.removeEventListener('userchange', handler);
+  }, []);
+
   return (
     <CartProvider>
       <Router>
-        <Navbar />
+        {token && <Navbar />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
