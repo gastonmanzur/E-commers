@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Register from './pages/Register.jsx';
 import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
