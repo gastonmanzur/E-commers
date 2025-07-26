@@ -15,6 +15,7 @@ export default function Products() {
     image2: '',
     image3: '',
     category: '',
+    gender: 'unisex',
     inStock: true,
     stock: 0,
   });
@@ -43,9 +44,13 @@ export default function Products() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const term = params.get('search') || '';
+    const gender = params.get('gender') || '';
+    const query = {};
+    if (term) query.search = term;
+    if (gender) query.gender = gender;
     axios
       .get('http://localhost:5000/api/products', {
-        params: term ? { search: term } : {},
+        params: query,
       })
       .then((res) => setProducts(res.data))
       .catch(() => alert('Error al obtener productos'));
@@ -73,6 +78,7 @@ export default function Products() {
       image2: img2,
       image3: img3,
       category: prod.category || '',
+      gender: prod.gender || 'unisex',
       inStock: prod.inStock,
       stock: prod.stock || 0,
     });
@@ -92,6 +98,7 @@ export default function Products() {
           price: Number(editForm.price),
           images,
           category: editForm.category,
+          gender: editForm.gender,
           inStock: editForm.inStock,
           stock: Number(editForm.stock),
         },
@@ -139,6 +146,19 @@ export default function Products() {
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Productos</h2>
+      <div className="mb-3">
+        <select className="form-select w-auto" value={new URLSearchParams(location.search).get('gender') || ''}
+          onChange={e => {
+            const params = new URLSearchParams(location.search);
+            if (e.target.value) params.set('gender', e.target.value); else params.delete('gender');
+            navigate(`/products?${params.toString()}`);
+          }}>
+          <option value="">Todos</option>
+          <option value="femenino">Para Ella</option>
+          <option value="masculino">Para Él</option>
+          <option value="unisex">Unisex</option>
+        </select>
+      </div>
       <div className="row">
         {products.map(prod => (
           <div className="col-sm-6 col-md-3 mb-3" key={prod._id}>
@@ -264,6 +284,14 @@ export default function Products() {
                   <div className="mb-2">
                     <input className="form-control" placeholder="Categoría" value={editForm.category}
                       onChange={e => setEditForm({ ...editForm, category: e.target.value })} />
+                  </div>
+                  <div className="mb-2">
+                    <select className="form-select" value={editForm.gender}
+                      onChange={e => setEditForm({ ...editForm, gender: e.target.value })}>
+                      <option value="unisex">Unisex</option>
+                      <option value="femenino">Para Ella</option>
+                      <option value="masculino">Para Él</option>
+                    </select>
                   </div>
                   <div className="mb-2">
                     <input type="number" className="form-control" placeholder="Stock" value={editForm.stock}

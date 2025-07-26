@@ -9,6 +9,11 @@ const productSchema = new mongoose.Schema({
     validate: [arr => arr.length <= 3, 'Máximo 3 imágenes']
   },
   category: String,
+  gender: {
+    type: String,
+    enum: ['femenino', 'masculino', 'unisex'],
+    default: 'unisex'
+  },
   inStock: { type: Boolean, default: true },
   stock: { type: Number, default: 0 },
 }, {

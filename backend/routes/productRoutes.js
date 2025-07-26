@@ -8,16 +8,18 @@ const router = express.Router();
 // Obtener todos los productos
 router.get('/', async (req, res) => {
   try {
-    const { search } = req.query;
-    const filter = search
-      ? {
-          $or: [
-            { name: { $regex: search, $options: 'i' } },
-            { description: { $regex: search, $options: 'i' } },
-            { category: { $regex: search, $options: 'i' } },
-          ],
-        }
-      : {};
+    const { search, gender } = req.query;
+    let filter = {};
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+        { category: { $regex: search, $options: 'i' } },
+      ];
+    }
+    if (gender && ['femenino','masculino','unisex'].includes(gender)) {
+      filter.gender = gender;
+    }
     const products = await Product.find(filter);
     res.json(products);
   } catch (err) {
@@ -38,9 +40,9 @@ router.get('/:id', async (req, res) => {
 
 // Crear un nuevo producto
 router.post('/', protect, isAdmin, async (req, res) => {
-  const { name, description, price, images = [], category, inStock, stock } = req.body;
+  const { name, description, price, images = [], category, gender = 'unisex', inStock, stock } = req.body;
   if (images.length > 3) return res.status(400).json({ message: 'Máximo 3 imágenes' });
-  const product = new Product({ name, description, price, images, category, inStock, stock });
+  const product = new Product({ name, description, price, images, category, gender, inStock, stock });
 
   try {
     const newProduct = await product.save();
@@ -70,7 +72,7 @@ router.patch('/:id/stock', async (req, res) => {
 
 // Actualizar un producto
 router.put('/:id', protect, isAdmin, async (req, res) => {
-  const { name, description, price, images = [], category, inStock, stock } = req.body;
+  const { name, description, price, images = [], category, gender = 'unisex', inStock, stock } = req.body;
   if (images.length > 3) return res.status(400).json({ message: 'Máximo 3 imágenes' });
   try {
     const product = await Product.findById(req.params.id);
@@ -80,6 +82,7 @@ router.put('/:id', protect, isAdmin, async (req, res) => {
     product.price = price;
     product.images = images;
     product.category = category;
+    product.gender = gender;
     product.inStock = inStock;
     if (stock !== undefined) product.stock = stock;
     const updated = await product.save();
