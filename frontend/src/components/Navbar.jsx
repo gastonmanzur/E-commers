@@ -43,9 +43,23 @@ export default function Navbar() {
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (pos) => {
+        async (pos) => {
           const { latitude, longitude } = pos.coords;
-          setUserLocation(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
+          try {
+            const res = await fetch(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=es`,
+            );
+            const data = await res.json();
+            const city =
+              data.city ||
+              data.locality ||
+              data.principalSubdivision ||
+              'ubicación desconocida';
+            setUserLocation(city);
+          } catch (err) {
+            console.error(err);
+            setUserLocation('ubicación desconocida');
+          }
         },
         () => setUserLocation('ubicación desconocida'),
       );
@@ -174,15 +188,16 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-        <div className="w-100 d-flex align-items-center ps-2">
-          <i className="bi bi-geo-alt-fill me-1" />
-          <small>Enviar a {userLocation || '...'}</small>
-        </div>
-        <form
-          className="d-flex my-2 mx-auto"
-          style={{ width: '50vw' }}
-          onSubmit={handleSearch}
-        >
+        <div className="w-100 d-flex align-items-center">
+          <div className="ps-2 d-flex align-items-center me-3">
+            <i className="bi bi-geo-alt-fill me-1" />
+            <small>Enviar a {userLocation || '...'}</small>
+          </div>
+          <form
+            className="d-flex my-2 flex-grow-1"
+            style={{ maxWidth: '50vw' }}
+            onSubmit={handleSearch}
+          >
           <input
             className="form-control me-2 flex-grow-1"
             type="search"
@@ -193,7 +208,8 @@ export default function Navbar() {
           <button className="btn btn-outline-light" type="submit">
             Buscar
           </button>
-        </form>
+          </form>
+        </div>
         <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
