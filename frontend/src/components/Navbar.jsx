@@ -12,6 +12,7 @@ export default function Navbar() {
   const fileInputRef = useRef(null);
   const { items } = useContext(CartContext);
   const [search, setSearch] = useState('');
+  const [userLocation, setUserLocation] = useState('');
 
   // Sync component state with localStorage when user logs in or out
   useEffect(() => {
@@ -38,6 +39,20 @@ export default function Navbar() {
     const stored = localStorage.getItem('avatar');
     setAvatar(stored || '');
   }, [token]);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          setUserLocation(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
+        },
+        () => setUserLocation('ubicación desconocida'),
+      );
+    } else {
+      setUserLocation('ubicación no disponible');
+    }
+  }, []);
 
   const { clearCart } = useContext(CartContext);
 
@@ -158,6 +173,10 @@ export default function Navbar() {
               <span className="navbar-toggler-icon" />
             </button>
           </div>
+        </div>
+        <div className="w-100 d-flex align-items-center ps-2">
+          <i className="bi bi-geo-alt-fill me-1" />
+          <small>Enviar a {userLocation || '...'}</small>
         </div>
         <form
           className="d-flex my-2 mx-auto"
