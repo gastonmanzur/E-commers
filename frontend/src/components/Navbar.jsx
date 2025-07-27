@@ -88,24 +88,86 @@ export default function Navbar() {
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container">
-        <Link className="navbar-brand" to="/">
-          Ana<strong>Roma</strong>
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+    <nav
+      className="navbar navbar-expand-lg navbar-light"
+      style={{ backgroundColor: '#ffa07a' }}
+    >
+      <div className="container flex-column">
+        <div className="w-100 d-flex justify-content-between align-items-center">
+          <Link className="navbar-brand" to="/">
+            Ana<strong>Roma</strong>
+          </Link>
+          <div className="d-flex align-items-center">
+            <Link
+              className="position-relative me-3"
+              to="/cart"
+            >
+              <i className="bi bi-cart" style={{ fontSize: '1.2rem' }} />
+              {cartCount > 0 && (
+                <span
+                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  style={{ fontSize: '0.6rem' }}
+                >
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+            {token && (
+              <div
+                className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  border: '1px solid black',
+                  cursor: 'pointer',
+                }}
+                onClick={handleAvatarClick}
+              >
+                {avatar ? (
+                  <img src={avatar} alt="Usuario" className="w-100 h-100" />
+                ) : (
+                  <span className="fw-bold">{initial}</span>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  className="d-none"
+                />
+              </div>
+            )}
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon" />
+            </button>
+          </div>
+        </div>
+        <form
+          className="d-flex my-2 mx-auto"
+          style={{ width: '50vw' }}
+          onSubmit={handleSearch}
         >
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <input
+            className="form-control me-2 flex-grow-1"
+            type="search"
+            placeholder="Buscar"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button className="btn btn-outline-light" type="submit">
+            Buscar
+          </button>
+        </form>
+        <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link" to="/products">
                 Productos
@@ -134,69 +196,13 @@ export default function Navbar() {
           {token && (
             <button
               type="button"
-              className="btn btn-outline-secondary btn-sm mb-2 mb-lg-0"
+              className="btn btn-outline-light btn-sm mb-2"
               onClick={handleLogout}
             >
               Cerrar sesión
             </button>
           )}
         </div>
-        <form
-          className="d-flex me-lg-3 mb-2 mb-lg-0"
-          onSubmit={handleSearch}
-        >
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Buscar"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button className="btn btn-outline-success" type="submit">
-            Buscar
-          </button>
-        </form>
-        <Link
-          className="position-relative me-lg-3 mb-2 mb-lg-0"
-          to="/cart"
-        >
-          <i className="bi bi-cart" style={{ fontSize: '1.2rem' }} />
-          {cartCount > 0 && (
-            <span
-              className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              style={{ fontSize: '0.6rem' }}
-            >
-              {cartCount}
-            </span>
-          )}
-        </Link>
-        {token && (
-          <div className="d-flex align-items-center">
-            <div
-              className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
-              style={{
-                width: '40px',
-                height: '40px',
-                border: '1px solid black',
-                cursor: 'pointer',
-              }}
-              onClick={handleAvatarClick}
-            >
-              {avatar ? (
-                <img src={avatar} alt="Usuario" className="w-100 h-100" />
-              ) : (
-                <span className="fw-bold">{initial}</span>
-              )}
-              <input
-                type="file"
-                accept="image/*"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                className="d-none"
-              />
-            </div>
-          </div>
-        )}
       </div>
     </nav>
   );
