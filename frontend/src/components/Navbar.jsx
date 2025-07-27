@@ -88,10 +88,10 @@ export default function Navbar() {
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <nav
-      className="navbar navbar-expand-lg navbar-light"
-      style={{ backgroundColor: '#ffa07a' }}
-    >
+      <nav
+        className="navbar navbar-expand-lg navbar-light"
+        style={{ backgroundColor: '#FFC9C9' }}
+      >
       <div className="container flex-column">
         <div className="w-100 d-flex justify-content-between align-items-center">
           <Link className="navbar-brand" to="/">
@@ -102,7 +102,7 @@ export default function Navbar() {
               className="position-relative me-3"
               to="/cart"
             >
-              <i className="bi bi-cart" style={{ fontSize: '1.2rem' }} />
+              <i className="bi bi-cart" style={{ fontSize: '1.6rem' }} />
               {cartCount > 0 && (
                 <span
                   className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
@@ -112,31 +112,40 @@ export default function Navbar() {
                 </span>
               )}
             </Link>
-            {token && (
-              <div
-                className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  border: '1px solid black',
-                  cursor: 'pointer',
-                }}
-                onClick={handleAvatarClick}
-              >
-                {avatar ? (
-                  <img src={avatar} alt="Usuario" className="w-100 h-100" />
-                ) : (
-                  <span className="fw-bold">{initial}</span>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  className="d-none"
-                />
-              </div>
-            )}
+              {token && (
+                <>
+                  <div
+                    className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      border: '1px solid black',
+                      cursor: 'pointer',
+                    }}
+                    onClick={handleAvatarClick}
+                  >
+                    {avatar ? (
+                      <img src={avatar} alt="Usuario" className="w-100 h-100" />
+                    ) : (
+                      <span className="fw-bold">{initial}</span>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      className="d-none"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn-outline-light btn-sm me-2"
+                    onClick={handleLogout}
+                  >
+                    Cerrar sesión
+                  </button>
+                </>
+              )}
             <button
               className="navbar-toggler"
               type="button"
@@ -193,15 +202,6 @@ export default function Navbar() {
               </>
             )}
           </ul>
-          {token && (
-            <button
-              type="button"
-              className="btn btn-outline-light btn-sm mb-2"
-              onClick={handleLogout}
-            >
-              Cerrar sesión
-            </button>
-          )}
         </div>
       </div>
     </nav>
