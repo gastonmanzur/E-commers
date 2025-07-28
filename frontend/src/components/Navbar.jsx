@@ -189,9 +189,15 @@ export default function Navbar() {
           </div>
         </div>
         <div className="w-100 d-flex align-items-center">
-          <div className="ps-2 d-flex align-items-center me-3">
-            <i className="bi bi-geo-alt-fill me-1" />
-            <small>Enviar a {userLocation || '...'}</small>
+          <div
+            className="ps-2 d-flex flex-column align-items-start me-3"
+            style={{ fontSize: '0.95rem' }}
+          >
+            <div className="d-flex align-items-center">
+              <i className="bi bi-geo-alt-fill me-1" />
+              <span>Enviar a</span>
+            </div>
+            <span>{userLocation || '...'}</span>
           </div>
           <form
             className="d-flex my-2 flex-grow-1"
