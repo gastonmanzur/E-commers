@@ -57,6 +57,12 @@ export default function Products() {
   }, [location.search]);
 
   const handleAdd = async (prod) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Debes iniciar sesión para agregar productos');
+      navigate('/login');
+      return;
+    }
     const qty = Number(quantities[prod._id] || 1);
     if (qty <= 0) return;
     if (qty > prod.stock) {
@@ -198,6 +204,7 @@ export default function Products() {
                 <button
                   type="button"
                   className="btn btn-primary"
+                  disabled={!localStorage.getItem('token')}
                   onClick={e => {
                     e.stopPropagation();
                     handleAdd(prod);

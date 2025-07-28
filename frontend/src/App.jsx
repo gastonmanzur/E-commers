@@ -25,7 +25,7 @@ export default function App() {
   return (
     <CartProvider>
       <Router>
-        {token && <Navbar />}
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

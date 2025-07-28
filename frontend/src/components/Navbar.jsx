@@ -225,7 +225,7 @@ export default function Navbar() {
                 </span>
               )}
             </Link>
-            {token && (
+            {token ? (
               <>
                 <div
                   className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
@@ -257,6 +257,21 @@ export default function Navbar() {
                 >
                   Cerrar sesión
                 </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="btn btn-outline-light btn-sm me-2"
+                >
+                  Iniciar sesión
+                </Link>
+                <Link
+                  to="/register"
+                  className="btn btn-outline-light btn-sm me-2"
+                >
+                  Registrarse
+                </Link>
               </>
             )}
             <button
