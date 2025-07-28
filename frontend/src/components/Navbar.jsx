@@ -115,6 +115,7 @@ export default function Navbar() {
 
   const initial = name.charAt(0).toUpperCase();
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
+  const headerImage = 'http://localhost:5000/uploads/Ana_roma.jpg';
 
   return (
       <nav
@@ -122,25 +123,40 @@ export default function Navbar() {
         style={{ backgroundColor: '#FFC9C9' }}
       >
       <div className="container flex-column">
-        <div className="w-100 d-flex justify-content-between align-items-center">
+        <div className="w-100 d-flex align-items-center justify-content-between">
           <Link className="navbar-brand" to="/">
             Ana<strong>Roma</strong>
           </Link>
-          <div className="d-flex align-items-center">
-            <Link
-              className="position-relative me-3"
-              to="/cart"
-            >
-              <i className="bi bi-cart" style={{ fontSize: '1.6rem' }} />
-              {cartCount > 0 && (
-                <span
-                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                  style={{ fontSize: '0.6rem' }}
-                >
-                  {cartCount}
-                </span>
-              )}
-            </Link>
+          <form
+            className="d-flex flex-grow-1 mx-3"
+            style={{ maxWidth: '50vw' }}
+            onSubmit={handleSearch}
+          >
+            <input
+              className="form-control me-2 flex-grow-1"
+              type="search"
+              placeholder="Buscar"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button className="btn btn-outline-light" type="submit">
+              Buscar
+            </button>
+          </form>
+          <div className="d-flex flex-column align-items-center ms-3">
+            <img src={headerImage} alt="Ana Roma" style={{ height: '60px' }} />
+            <div className="mt-2 d-flex align-items-center">
+              <Link className="position-relative me-3" to="/cart">
+                <i className="bi bi-cart" style={{ fontSize: '1.6rem' }} />
+                {cartCount > 0 && (
+                  <span
+                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    style={{ fontSize: '0.6rem' }}
+                  >
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
               {token && (
                 <>
                   <div
@@ -175,8 +191,9 @@ export default function Navbar() {
                   </button>
                 </>
               )}
+            </div>
             <button
-              className="navbar-toggler"
+              className="navbar-toggler mt-2"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNav"
@@ -188,7 +205,7 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-        <div className="w-100 d-flex align-items-center">
+        <div className="w-100 d-flex align-items-center mt-2">
           <div
             className="ps-2 d-flex flex-column align-items-start me-3"
             style={{ fontSize: '0.95rem' }}
@@ -199,25 +216,8 @@ export default function Navbar() {
             </div>
             <span>{userLocation || '...'}</span>
           </div>
-          <form
-            className="d-flex my-2 flex-grow-1"
-            style={{ maxWidth: '50vw' }}
-            onSubmit={handleSearch}
-          >
-          <input
-            className="form-control me-2 flex-grow-1"
-            type="search"
-            placeholder="Buscar"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button className="btn btn-outline-light" type="submit">
-            Buscar
-          </button>
-          </form>
-        </div>
-        <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
-          <ul className="navbar-nav mb-2 mb-lg-0">
+          <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link" to="/products">
                 Productos
