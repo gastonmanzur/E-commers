@@ -115,7 +115,30 @@ export default function Navbar() {
 
   const initial = name.charAt(0).toUpperCase();
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
-  const headerImage = 'http://localhost:5000/uploads/Ana_roma.jpg';
+  const promoContainerStyle = {
+    width: '160px',
+    lineHeight: 1,
+    textAlign: 'center',
+  };
+
+  const promoTopStyle = {
+    backgroundColor: '#e53752',
+    borderTopLeftRadius: '8px',
+    borderTopRightRadius: '8px',
+    fontFamily: '"Dream avenue", sans-serif',
+    color: '#fff3f5',
+    padding: '4px',
+    fontSize: '0.8rem',
+  };
+
+  const promoBottomStyle = {
+    backgroundColor: '#fff3f5',
+    color: '#e53752',
+    borderBottomRightRadius: '8px',
+    fontFamily: '"Dream avenue", sans-serif',
+    padding: '4px',
+    fontSize: '0.8rem',
+  };
 
   return (
       <nav
@@ -143,8 +166,9 @@ export default function Navbar() {
               Buscar
             </button>
           </form>
-          <div className="d-flex flex-column align-items-center ms-3">
-            <img src={headerImage} alt="Ana Roma" style={{ height: '90px' }} />
+          <div className="d-flex flex-column align-items-center ms-3" style={promoContainerStyle}>
+            <div style={promoTopStyle}>PROMOCIONES Y DESCUENTOS</div>
+            <div style={promoBottomStyle}>En cada compra</div>
           </div>
         </div>
         <div className="w-100 d-flex align-items-center justify-content-between mt-2">
