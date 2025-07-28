@@ -150,7 +150,7 @@ export default function Navbar() {
       >
       <div className="container flex-column">
         <div className="w-100 d-flex align-items-center justify-content-between">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand" to="/" style={{ fontSize: '1.5625rem' }}>
             Ana<strong>Roma</strong>
           </Link>
           <form
