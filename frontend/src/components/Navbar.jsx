@@ -144,68 +144,10 @@ export default function Navbar() {
             </button>
           </form>
           <div className="d-flex flex-column align-items-center ms-3">
-            <img src={headerImage} alt="Ana Roma" style={{ height: '60px' }} />
-            <div className="mt-2 d-flex align-items-center">
-              <Link className="position-relative me-3" to="/cart">
-                <i className="bi bi-cart" style={{ fontSize: '1.6rem' }} />
-                {cartCount > 0 && (
-                  <span
-                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                    style={{ fontSize: '0.6rem' }}
-                  >
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
-              {token && (
-                <>
-                  <div
-                    className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      border: '1px solid black',
-                      cursor: 'pointer',
-                    }}
-                    onClick={handleAvatarClick}
-                  >
-                    {avatar ? (
-                      <img src={avatar} alt="Usuario" className="w-100 h-100" />
-                    ) : (
-                      <span className="fw-bold">{initial}</span>
-                    )}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      ref={fileInputRef}
-                      onChange={handleFileChange}
-                      className="d-none"
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    className="btn btn-outline-light btn-sm me-2"
-                    onClick={handleLogout}
-                  >
-                    Cerrar sesión
-                  </button>
-                </>
-              )}
-            </div>
-            <button
-              className="navbar-toggler mt-2"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon" />
-            </button>
+            <img src={headerImage} alt="Ana Roma" style={{ height: '90px' }} />
           </div>
         </div>
-        <div className="w-100 d-flex align-items-center mt-2">
+        <div className="w-100 d-flex align-items-center justify-content-between mt-2">
           <div
             className="ps-2 d-flex flex-column align-items-start me-3"
             style={{ fontSize: '0.95rem' }}
@@ -216,7 +158,7 @@ export default function Navbar() {
             </div>
             <span>{userLocation || '...'}</span>
           </div>
-          <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <div className="collapse navbar-collapse flex-grow-1 justify-content-center" id="navbarNav">
             <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link" to="/products">
@@ -242,9 +184,67 @@ export default function Navbar() {
                 </li>
               </>
             )}
-          </ul>
+            </ul>
+          </div>
+          <div className="d-flex align-items-center ms-3">
+            <Link className="position-relative me-3" to="/cart">
+              <i className="bi bi-cart" style={{ fontSize: '2.4rem' }} />
+              {cartCount > 0 && (
+                <span
+                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  style={{ fontSize: '0.6rem' }}
+                >
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+            {token && (
+              <>
+                <div
+                  className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
+                  style={{
+                    width: '60px',
+                    height: '60px',
+                    border: '1px solid black',
+                    cursor: 'pointer',
+                  }}
+                  onClick={handleAvatarClick}
+                >
+                  {avatar ? (
+                    <img src={avatar} alt="Usuario" className="w-100 h-100" />
+                  ) : (
+                    <span className="fw-bold">{initial}</span>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    className="d-none"
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-outline-light btn-sm me-2"
+                  onClick={handleLogout}
+                >
+                  Cerrar sesión
+                </button>
+              </>
+            )}
+            <button
+              className="navbar-toggler ms-2"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon" />
+            </button>
+          </div>
         </div>
-      </div>
       </div>
     </nav>
   );
