@@ -116,7 +116,7 @@ export default function Navbar() {
   const initial = name.charAt(0).toUpperCase();
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
   const promoContainerStyle = {
-    width: '160px',
+    width: '240px',
     lineHeight: 1,
     textAlign: 'center',
   };
