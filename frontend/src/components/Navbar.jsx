@@ -125,6 +125,7 @@ export default function Navbar() {
     backgroundColor: '#e53752',
     borderTopLeftRadius: '8px',
     borderTopRightRadius: '8px',
+    width: '100%',
     fontFamily: '"Dream avenue", sans-serif',
     color: '#fff3f5',
     padding: '4px',
@@ -135,6 +136,8 @@ export default function Navbar() {
     backgroundColor: '#fff3f5',
     color: '#e53752',
     borderBottomRightRadius: '8px',
+    borderBottomLeftRadius: '8px',
+    width: '100%',
     fontFamily: '"Dream avenue", sans-serif',
     padding: '4px',
     fontSize: '0.8rem',
@@ -227,8 +230,8 @@ export default function Navbar() {
                 <div
                   className="rounded-circle overflow-hidden d-flex justify-content-center align-items-center me-2"
                   style={{
-                    width: '60px',
-                    height: '60px',
+                    width: '42px',
+                    height: '42px',
                     border: '1px solid black',
                     cursor: 'pointer',
                   }}

@@ -57,7 +57,7 @@ export default function Profile() {
             {avatar && (
               <div
                 className="rounded-circle overflow-hidden"
-                style={{ width: '100px', height: '100px', border: '1px solid black', cursor: 'pointer' }}
+                style={{ width: '70px', height: '70px', border: '1px solid black', cursor: 'pointer' }}
                 onClick={handleImageClick}
               >
                 <img src={avatar} alt="Avatar" className="w-100 h-100" />
