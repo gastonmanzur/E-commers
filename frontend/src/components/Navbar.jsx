@@ -168,8 +168,7 @@ export default function Navbar() {
             Ana<strong>Roma</strong>
           </Link>
           <form
-            className="d-flex flex-grow-1 mx-3"
-            style={{ maxWidth: '50vw' }}
+            className="d-flex flex-grow-1 mx-3 search-form"
             onSubmit={handleSearch}
           >
             <input
@@ -183,7 +182,7 @@ export default function Navbar() {
               Buscar
             </button>
           </form>
-          <div className="d-flex flex-column align-items-center ms-3" style={promoContainerStyle}>
+          <div className="d-none d-md-flex flex-column align-items-center ms-3" style={promoContainerStyle}>
             <div style={promoTopStyle}>PROMOCIONES Y DESCUENTOS</div>
             <div style={promoBottomStyle}>En cada compra</div>
           </div>
