@@ -64,3 +64,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.search-form {
+  max-width: 50vw;
+}
+
+@media (max-width: 768px) {
+  .search-form {
+    max-width: none;
+  }
+}
