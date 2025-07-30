@@ -81,10 +81,6 @@ export default function Home() {
       </div>
 
       <div className="container mt-5">
-        <h1 className="mb-4 text-center">Bienvenido</h1>
-        <p className="lead text-center">
-          Aquí se mostrarán ofertas, promociones y productos destacados.
-        </p>
         {promos.length > 0 && (
           <div className="mt-4">
             <h3>Promociones</h3>
