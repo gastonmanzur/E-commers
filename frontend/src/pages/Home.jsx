@@ -79,6 +79,7 @@ export default function Home() {
           </button>
         </div>
       </div>
+      <div className="carousel-overlay" />
 
       <div className="container mt-5">
         {promos.length > 0 && (
