@@ -20,7 +20,7 @@ export default function Home() {
           <div className="carousel-inner">
             <div className="carousel-item active">
               <img
-                src="https://source.unsplash.com/random/1200x400?sig=1"
+                src="http://localhost:5000/uploads/carrousel1.png"
                 className="d-block w-100"
                 alt="Slide 1"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
@@ -28,7 +28,7 @@ export default function Home() {
             </div>
             <div className="carousel-item">
               <img
-                src="https://source.unsplash.com/random/1200x400?sig=2"
+                src="http://localhost:5000/uploads/carrousel2.png"
                 className="d-block w-100"
                 alt="Slide 2"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
@@ -36,7 +36,7 @@ export default function Home() {
             </div>
             <div className="carousel-item">
               <img
-                src="https://source.unsplash.com/random/1200x400?sig=3"
+                src="http://localhost:5000/uploads/carrousel3.png"
                 className="d-block w-100"
                 alt="Slide 3"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
@@ -44,7 +44,7 @@ export default function Home() {
             </div>
             <div className="carousel-item">
               <img
-                src="https://source.unsplash.com/random/1200x400?sig=4"
+                src="http://localhost:5000/uploads/carrousel4.png"
                 className="d-block w-100"
                 alt="Slide 4"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
@@ -52,7 +52,7 @@ export default function Home() {
             </div>
             <div className="carousel-item">
               <img
-                src="https://source.unsplash.com/random/1200x400?sig=5"
+                src="http://localhost:5000/uploads/carrousel5.png"
                 className="d-block w-100"
                 alt="Slide 5"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
