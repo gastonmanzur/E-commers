@@ -157,6 +157,35 @@ export default function Navbar() {
     fontSize: '0.8rem',
   };
 
+  const navLinks = (
+    <>
+      <li className="nav-item">
+        <Link className="nav-link" to="/products">
+          Productos
+        </Link>
+      </li>
+      {role === 'admin' && (
+        <>
+          <li className="nav-item">
+            <Link className="nav-link" to="/add-product">
+              Agregar producto
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/admin/promos">
+              Promociones
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/admin/orders">
+              Órdenes
+            </Link>
+          </li>
+        </>
+      )}
+    </>
+  );
+
   return (
       <nav
         className="navbar navbar-expand-lg navbar-light"
@@ -188,15 +217,20 @@ export default function Navbar() {
           </div>
         </div>
         <div className="w-100 d-flex align-items-center justify-content-between mt-2">
-          <div
-            className="ps-2 d-flex align-items-center flex-lg-column align-items-lg-start me-3"
-            style={{ fontSize: '0.95rem' }}
-          >
-            <div className="d-flex align-items-center">
-              <i className="bi bi-geo-alt-fill me-1" />
-              <span>Enviar a</span>
+          <div className="d-flex align-items-center flex-grow-1">
+            <div
+              className="ps-2 d-flex align-items-center flex-lg-column align-items-lg-start me-3"
+              style={{ fontSize: '0.95rem' }}
+            >
+              <div className="d-flex align-items-center">
+                <i className="bi bi-geo-alt-fill me-1" />
+                <span>Enviar a</span>
+              </div>
+              <span className="ms-1 ms-lg-0">{userLocation || '...'}</span>
             </div>
-            <span className="ms-1 ms-lg-0">{userLocation || '...'}</span>
+            <ul className="navbar-nav d-none d-lg-flex flex-row mx-auto">
+              {navLinks}
+            </ul>
           </div>
           <div className="d-flex align-items-center ms-3">
             <Link className="position-relative me-2 me-lg-3" to="/cart">
@@ -296,32 +330,7 @@ export default function Navbar() {
               </div>
             )}
             <div className="flex-grow-1 d-flex flex-column">
-              <ul className="navbar-nav flex-column mb-2">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/products">
-                    Productos
-                  </Link>
-                </li>
-                {role === 'admin' && (
-                  <>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/add-product">
-                        Agregar producto
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/admin/promos">
-                        Promociones
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/admin/orders">
-                        Órdenes
-                      </Link>
-                    </li>
-                  </>
-                )}
-              </ul>
+              <ul className="navbar-nav flex-column mb-2">{navLinks}</ul>
               <div className="mt-auto text-center mb-2">
                 {token ? (
                   <button type="button" className="btn btn-outline-light btn-sm" onClick={handleLogout}>
@@ -340,32 +349,6 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          <ul className="navbar-nav mb-2 mb-lg-0 d-none d-lg-flex w-100 justify-content-center">
-            <li className="nav-item">
-              <Link className="nav-link" to="/products">
-                Productos
-              </Link>
-            </li>
-            {role === 'admin' && (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/add-product">
-                    Agregar producto
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/admin/promos">
-                    Promociones
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/admin/orders">
-                    Órdenes
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
         </div>
       </div>
     </nav>
