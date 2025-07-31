@@ -32,7 +32,7 @@ export default function Home() {
           <div className="carousel-inner">
             <div className="carousel-item active">
               <img
-                src="http://localhost:5000/uploads/carrousel1.png"
+                src="http://localhost:5000/uploads/carousel1.png"
                 className="d-block w-100"
                 alt="Slide 1"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
@@ -40,7 +40,7 @@ export default function Home() {
             </div>
             <div className="carousel-item">
               <img
-                src="http://localhost:5000/uploads/carrousel2.png"
+                src="http://localhost:5000/uploads/carousel2.png"
                 className="d-block w-100"
                 alt="Slide 2"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
@@ -48,7 +48,7 @@ export default function Home() {
             </div>
             <div className="carousel-item">
               <img
-                src="http://localhost:5000/uploads/carrousel3.png"
+                src="http://localhost:5000/uploads/carousel3.png"
                 className="d-block w-100"
                 alt="Slide 3"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
@@ -56,7 +56,7 @@ export default function Home() {
             </div>
             <div className="carousel-item">
               <img
-                src="http://localhost:5000/uploads/carrousel4.png"
+                src="http://localhost:5000/uploads/carousel4.png"
                 className="d-block w-100"
                 alt="Slide 4"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
@@ -64,7 +64,7 @@ export default function Home() {
             </div>
             <div className="carousel-item">
               <img
-                src="http://localhost:5000/uploads/carrousel5.png"
+                src="http://localhost:5000/uploads/carousel5.png"
                 className="d-block w-100"
                 alt="Slide 5"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}

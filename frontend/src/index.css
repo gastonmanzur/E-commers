@@ -78,11 +78,13 @@ button:focus-visible {
 .carousel-overlay {
   width: 100%;
   height: 200px;
+  margin-top: -200px;
+  pointer-events: none;
   background: linear-gradient(to bottom, rgba(255,255,255,0) 50%, #ffeaf5 100%);
 }
 
 .promo-slider-wrapper {
-  transform: translateY(-35%);
+  /* Removing transform ensures promo cards remain visible under the carousel */
 }
 
 .promo-card {
