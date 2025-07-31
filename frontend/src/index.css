@@ -80,7 +80,6 @@ button:focus-visible {
   height: 200px;
   margin-top: -200px;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 50%, #ffeaf5 100%);
 }
 
 .promo-slider-wrapper {

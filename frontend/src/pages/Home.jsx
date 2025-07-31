@@ -3,11 +3,49 @@ import axios from 'axios';
 export default function Home() {
   const [promos, setPromos] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
+  const [overlayColor, setOverlayColor] = useState('255,234,245');
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/promotions')
       .then(res => setPromos(res.data))
       .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const carouselElement = document.getElementById('homeCarousel');
+    if (!carouselElement) return;
+
+    const updateOverlayColor = () => {
+      const activeImg = carouselElement.querySelector('.carousel-item.active img');
+      if (!activeImg) return;
+
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = activeImg.src;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        const { data } = ctx.getImageData(0, img.height - 10, img.width, 10);
+        let r = 0; let g = 0; let b = 0; let count = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          r += data[i];
+          g += data[i + 1];
+          b += data[i + 2];
+          count += 1;
+        }
+        r = Math.round(r / count);
+        g = Math.round(g / count);
+        b = Math.round(b / count);
+        setOverlayColor(`${r},${g},${b}`);
+      };
+    };
+
+    updateOverlayColor();
+    carouselElement.addEventListener('slid.bs.carousel', updateOverlayColor);
+    return () => carouselElement.removeEventListener('slid.bs.carousel', updateOverlayColor);
   }, []);
 
   const handleNext = () => {
@@ -36,6 +74,7 @@ export default function Home() {
                 className="d-block w-100"
                 alt="Slide 1"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
+                crossOrigin="anonymous"
               />
             </div>
             <div className="carousel-item">
@@ -44,6 +83,7 @@ export default function Home() {
                 className="d-block w-100"
                 alt="Slide 2"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
+                crossOrigin="anonymous"
               />
             </div>
             <div className="carousel-item">
@@ -52,6 +92,7 @@ export default function Home() {
                 className="d-block w-100"
                 alt="Slide 3"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
+                crossOrigin="anonymous"
               />
             </div>
             <div className="carousel-item">
@@ -60,6 +101,7 @@ export default function Home() {
                 className="d-block w-100"
                 alt="Slide 4"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
+                crossOrigin="anonymous"
               />
             </div>
             <div className="carousel-item">
@@ -68,6 +110,7 @@ export default function Home() {
                 className="d-block w-100"
                 alt="Slide 5"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
+                crossOrigin="anonymous"
               />
             </div>
           </div>
@@ -91,7 +134,10 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <div className="carousel-overlay" />
+      <div
+        className="carousel-overlay"
+        style={{ background: `linear-gradient(to bottom, rgba(${overlayColor},0) 0%, rgba(${overlayColor},1) 100%)` }}
+      />
 
       {promos.length > 0 && (
         <div className="container mt-5 promo-slider-wrapper">
