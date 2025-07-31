@@ -61,83 +61,85 @@ export default function Home() {
 
   return (
     <>
-      <div className="container-fluid p-0">
-        <div
-          id="homeCarousel"
-          className="carousel slide"
-          data-bs-ride="carousel"
-        >
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <img
-                src="http://localhost:5000/uploads/carousel1.png"
-                className="d-block w-100"
-                alt="Slide 1"
-                style={{ maxHeight: '400px', objectFit: 'cover' }}
-                crossOrigin="anonymous"
-              />
+      <div className="carousel-wrapper">
+        <div className="container-fluid p-0">
+          <div
+            id="homeCarousel"
+            className="carousel slide"
+            data-bs-ride="carousel"
+          >
+            <div className="carousel-inner">
+              <div className="carousel-item active">
+                <img
+                  src="http://localhost:5000/uploads/carousel1.png"
+                  className="d-block w-100"
+                  alt="Slide 1"
+                  style={{ maxHeight: '400px', objectFit: 'cover' }}
+                  crossOrigin="anonymous"
+                />
+              </div>
+              <div className="carousel-item">
+                <img
+                  src="http://localhost:5000/uploads/carousel2.png"
+                  className="d-block w-100"
+                  alt="Slide 2"
+                  style={{ maxHeight: '400px', objectFit: 'cover' }}
+                  crossOrigin="anonymous"
+                />
+              </div>
+              <div className="carousel-item">
+                <img
+                  src="http://localhost:5000/uploads/carousel3.png"
+                  className="d-block w-100"
+                  alt="Slide 3"
+                  style={{ maxHeight: '400px', objectFit: 'cover' }}
+                  crossOrigin="anonymous"
+                />
+              </div>
+              <div className="carousel-item">
+                <img
+                  src="http://localhost:5000/uploads/carousel4.png"
+                  className="d-block w-100"
+                  alt="Slide 4"
+                  style={{ maxHeight: '400px', objectFit: 'cover' }}
+                  crossOrigin="anonymous"
+                />
+              </div>
+              <div className="carousel-item">
+                <img
+                  src="http://localhost:5000/uploads/carousel5.png"
+                  className="d-block w-100"
+                  alt="Slide 5"
+                  style={{ maxHeight: '400px', objectFit: 'cover' }}
+                  crossOrigin="anonymous"
+                />
+              </div>
             </div>
-            <div className="carousel-item">
-              <img
-                src="http://localhost:5000/uploads/carousel2.png"
-                className="d-block w-100"
-                alt="Slide 2"
-                style={{ maxHeight: '400px', objectFit: 'cover' }}
-                crossOrigin="anonymous"
-              />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="http://localhost:5000/uploads/carousel3.png"
-                className="d-block w-100"
-                alt="Slide 3"
-                style={{ maxHeight: '400px', objectFit: 'cover' }}
-                crossOrigin="anonymous"
-              />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="http://localhost:5000/uploads/carousel4.png"
-                className="d-block w-100"
-                alt="Slide 4"
-                style={{ maxHeight: '400px', objectFit: 'cover' }}
-                crossOrigin="anonymous"
-              />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="http://localhost:5000/uploads/carousel5.png"
-                className="d-block w-100"
-                alt="Slide 5"
-                style={{ maxHeight: '400px', objectFit: 'cover' }}
-                crossOrigin="anonymous"
-              />
-            </div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#homeCarousel"
+              data-bs-slide="prev"
+            >
+              <span className="carousel-control-prev-icon" aria-hidden="true" />
+              <span className="visually-hidden">Anterior</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#homeCarousel"
+              data-bs-slide="next"
+            >
+              <span className="carousel-control-next-icon" aria-hidden="true" />
+              <span className="visually-hidden">Siguiente</span>
+            </button>
           </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#homeCarousel"
-            data-bs-slide="prev"
-          >
-            <span className="carousel-control-prev-icon" aria-hidden="true" />
-            <span className="visually-hidden">Anterior</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#homeCarousel"
-            data-bs-slide="next"
-          >
-            <span className="carousel-control-next-icon" aria-hidden="true" />
-            <span className="visually-hidden">Siguiente</span>
-          </button>
         </div>
+        <div
+          className="carousel-overlay"
+          style={{ background: `linear-gradient(to bottom, rgba(${overlayColor},0) 0%, rgba(${overlayColor},1) 100%)` }}
+        />
       </div>
-      <div
-        className="carousel-overlay"
-        style={{ background: `linear-gradient(to bottom, rgba(${overlayColor},0) 0%, rgba(${overlayColor},1) 100%)` }}
-      />
 
       {promos.length > 0 && (
         <div className="container mt-5 promo-slider-wrapper">
