@@ -77,16 +77,17 @@ button:focus-visible {
 
 .carousel-wrapper {
   position: relative;
+  z-index: 0;
 }
 
 .carousel-overlay {
   position: absolute;
-  bottom: 0;
+  top: 100%;
   left: 0;
   width: 100%;
   height: 200px;
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
 }
 
 .promo-slider-wrapper {
