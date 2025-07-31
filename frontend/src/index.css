@@ -80,3 +80,18 @@ button:focus-visible {
   height: 200px;
   background: linear-gradient(to bottom, rgba(255,255,255,0) 50%, #ffeaf5 100%);
 }
+
+.promo-slider-wrapper {
+  transform: translateY(-35%);
+}
+
+.promo-card {
+  width: 100%;
+}
+
+.promo-next-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  padding: 0;
+}

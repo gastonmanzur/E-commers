@@ -2,12 +2,24 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 export default function Home() {
   const [promos, setPromos] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/promotions')
       .then(res => setPromos(res.data))
       .catch(() => {});
   }, []);
+
+  const handleNext = () => {
+    if (promos.length > 6) {
+      setStartIndex((prev) => (prev + 6) % promos.length);
+    }
+  };
+
+  const visiblePromos = Array.from(
+    { length: Math.min(6, promos.length) },
+    (_, i) => promos[(startIndex + i) % promos.length],
+  );
 
   return (
     <>
@@ -81,14 +93,13 @@ export default function Home() {
       </div>
       <div className="carousel-overlay" />
 
-      <div className="container mt-5">
-        {promos.length > 0 && (
-          <div className="mt-4">
-            <h3>Promociones</h3>
-            <div className="row">
-              {promos.map((promo) => (
-                <div key={promo._id} className="col-sm-6 col-md-4 mb-3">
-                  <div className="card h-100">
+      {promos.length > 0 && (
+        <div className="container mt-5 promo-slider-wrapper">
+          <div className="position-relative">
+            <div className="row g-3 justify-content-center">
+              {visiblePromos.map((promo) => (
+                <div key={promo._id} className="col-6 col-md-2">
+                  <div className="card h-100 promo-card">
                     {promo.image && (
                       <img
                         src={promo.image}
@@ -97,20 +108,29 @@ export default function Home() {
                         style={{ maxHeight: '150px', objectFit: 'cover' }}
                       />
                     )}
-                    <div className="card-body">
-                      <h5 className="card-title">{promo.name}</h5>
-                      <p className="card-text">${promo.price}</p>
+                    <div className="card-body p-2">
+                      <h6 className="card-title mb-1">{promo.name}</h6>
+                      <p className="card-text mb-1">${promo.price}</p>
                       {promo.description && (
-                        <p className="card-text">{promo.description}</p>
+                        <small className="text-muted">{promo.description}</small>
                       )}
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+            {promos.length > 6 && (
+              <button
+                type="button"
+                className="btn btn-primary promo-next-btn position-absolute top-50 end-0 translate-middle-y"
+                onClick={handleNext}
+              >
+                &gt;
+              </button>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 }
