@@ -124,3 +124,22 @@ button:focus-visible {
   padding: 20px 0;
   background: linear-gradient(to bottom, rgba(128,128,128,0), #e0e0e0 20%, #e0e0e0 80%, rgba(128,128,128,0));
 }
+
+.category-card {
+  width: 100%;
+  min-height: 260px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.category-main-img {
+  width: 100%;
+  flex: 0 0 60%;
+}
+
+.category-thumb {
+  width: 48%;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
