@@ -18,7 +18,10 @@ export function CartProvider({ children }) {
       if (Array.isArray(parsed) && parsed.every(i => i.product && i.quantity)) {
         return parsed;
       }
-    } catch (e) {}
+    } catch {
+      // ignore parse errors
+      return [];
+    }
     return [];
   };
 

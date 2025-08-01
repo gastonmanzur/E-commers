@@ -96,6 +96,8 @@ button:focus-visible {
 
 .promo-card {
   width: 100%;
+  border: none;
+  box-shadow: none;
 }
 
 .promo-next-btn {
@@ -108,8 +110,16 @@ button:focus-visible {
 .featured-card {
   width: 100%;
   min-height: 260px;
+  border: none;
+  box-shadow: none;
 }
 
 .featured-img {
   width: 60%;
+}
+
+.featured-section {
+  width: 100%;
+  padding: 20px 0;
+  background: linear-gradient(to bottom, rgba(128,128,128,0), #e0e0e0 20%, #e0e0e0 80%, rgba(128,128,128,0));
 }
