@@ -98,6 +98,7 @@ button:focus-visible {
   width: 100%;
   border: none;
   box-shadow: none;
+  background-color: #FFC9C9;
 }
 
 .promo-next-btn {
@@ -113,6 +114,7 @@ button:focus-visible {
   border: none;
   border-radius: 0;
   box-shadow: none;
+  background-color: #FFC9C9;
 }
 
 .featured-img {
@@ -131,6 +133,7 @@ button:focus-visible {
   border: none;
   border-radius: 0;
   box-shadow: none;
+  background-color: #FFC9C9;
 }
 
 .category-main-img {
@@ -142,4 +145,8 @@ button:focus-visible {
   width: 23%;
   aspect-ratio: 1/1;
   cursor: pointer;
+}
+
+.product-card {
+  background-color: #FFC9C9;
 }
