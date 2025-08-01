@@ -137,7 +137,7 @@ export default function Home() {
         </div>
         <div
           className="carousel-overlay"
-          style={{ background: `linear-gradient(to bottom, rgba(${overlayColor},0) 0%, rgba(${overlayColor},1) 100%)` }}
+          style={{ background: `linear-gradient(to bottom, rgba(${overlayColor},1) 0%, rgba(${overlayColor},0) 100%)` }}
         />
       </div>
 
