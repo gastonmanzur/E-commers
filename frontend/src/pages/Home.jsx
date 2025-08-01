@@ -175,7 +175,10 @@ export default function Home() {
                   <div
                     className="card h-100 promo-card"
                     style={{ cursor: 'pointer' }}
-                    onClick={() => navigate(`/products/${promo._id}`)}
+                    onClick={() => {
+                      const productId = promo.products?.[0]?._id || promo.products?.[0];
+                      if (productId) navigate(`/products/${productId}`);
+                    }}
                   >
                     {promo.image && (
                       <img
