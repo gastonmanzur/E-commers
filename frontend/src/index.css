@@ -104,3 +104,12 @@ button:focus-visible {
   border-radius: 50%;
   padding: 0;
 }
+
+.featured-card {
+  width: 100%;
+  min-height: 260px;
+}
+
+.featured-img {
+  width: 60%;
+}
