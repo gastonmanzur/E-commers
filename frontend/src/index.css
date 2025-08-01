@@ -111,6 +111,7 @@ button:focus-visible {
   width: 100%;
   min-height: 260px;
   border: none;
+  border-radius: 0;
   box-shadow: none;
 }
 
