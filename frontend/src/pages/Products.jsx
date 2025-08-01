@@ -149,6 +149,18 @@ export default function Products() {
     }
   };
 
+  const handleFeatured = async (id) => {
+    const token = localStorage.getItem('token');
+    try {
+      await axios.put(`http://localhost:5000/api/products/${id}/featured`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      alert('Producto marcado como destacado');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Error al marcar como destacado');
+    }
+  };
+
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Productos</h2>
@@ -214,6 +226,16 @@ export default function Products() {
                 </button>
                 {role === 'admin' && (
                   <div className="mt-2">
+                    <button
+                      type="button"
+                      className="btn btn-info btn-sm me-2"
+                      onClick={e => {
+                        e.stopPropagation();
+                        handleFeatured(prod._id);
+                      }}
+                    >
+                      Destacado
+                    </button>
                     <button
                       type="button"
                       className="btn btn-warning btn-sm me-2"

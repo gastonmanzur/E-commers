@@ -27,6 +27,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Obtener productos destacados
+router.get('/featured', async (req, res) => {
+  try {
+    const featured = await Product.find({ featured: true }).sort({ updatedAt: -1 }).limit(6);
+    res.json(featured);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Obtener producto por ID
 router.get('/:id', async (req, res) => {
   try {
@@ -64,6 +74,24 @@ router.patch('/:id/stock', async (req, res) => {
     }
     product.stock = newStock;
     await product.save();
+    res.json(product);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Marcar un producto como destacado
+router.put('/:id/featured', protect, isAdmin, async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Producto no encontrado' });
+    product.featured = true;
+    await product.save();
+    const extras = await Product.find({ featured: true }).sort({ updatedAt: -1 }).skip(6);
+    for (const p of extras) {
+      p.featured = false;
+      await p.save();
+    }
     res.json(product);
   } catch (err) {
     res.status(400).json({ message: err.message });
