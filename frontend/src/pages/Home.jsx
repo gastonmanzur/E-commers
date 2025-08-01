@@ -310,7 +310,7 @@ export default function Home() {
               {categoryPreviews.map(preview => (
                 <div key={preview.category} className="col-12 col-md-4">
                   <div className="card h-100 category-card text-center">
-                    <div className="card-body d-flex flex-column p-2">
+                    <div className="card-body d-flex flex-column p-2 h-100">
                       <h6 className="card-title mb-2">{preview.category}</h6>
                       {preview.mainImage && (
                         <img
@@ -320,7 +320,7 @@ export default function Home() {
                           style={{ objectFit: 'cover' }}
                         />
                       )}
-                      <div className="mt-auto d-flex flex-wrap justify-content-between gap-1">
+                      <div className="mt-auto d-flex justify-content-between gap-1">
                         {preview.images.map((img, idx) => (
                           <img
                             key={idx}

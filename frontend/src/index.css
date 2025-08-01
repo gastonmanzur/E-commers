@@ -135,11 +135,11 @@ button:focus-visible {
 
 .category-main-img {
   width: 100%;
-  flex: 0 0 60%;
+  height: 60%;
 }
 
 .category-thumb {
-  width: 48%;
+  width: 23%;
   aspect-ratio: 1/1;
   cursor: pointer;
 }
