@@ -136,6 +136,11 @@ button:focus-visible {
   background-color: #FFC9C9;
 }
 
+.category-card .card-title {
+  font-size: 1.25rem;
+  color: #fff;
+}
+
 .category-main-img {
   width: 100%;
   height: 60%;
