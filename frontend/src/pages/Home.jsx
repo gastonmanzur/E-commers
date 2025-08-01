@@ -331,8 +331,8 @@ export default function Home() {
                           style={{ objectFit: 'cover' }}
                         />
                       )}
-                      <div className="d-flex justify-content-between gap-1 mt-1">
-                        {preview.images.map((img, idx) => (
+                      <div className="d-flex justify-content-center gap-1 mt-1 mb-1">
+                        {preview.images.slice(0, 4).map((img, idx) => (
                           <img
                             key={idx}
                             src={img}
