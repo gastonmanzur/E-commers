@@ -98,7 +98,7 @@ button:focus-visible {
   width: 100%;
   border: none;
   box-shadow: none;
-  background-color: #FFC9C9;
+  background-color: #fff;
 }
 
 .promo-next-btn {
@@ -114,7 +114,7 @@ button:focus-visible {
   border: none;
   border-radius: 0;
   box-shadow: none;
-  background-color: #FFC9C9;
+  background-color: #fff;
 }
 
 .featured-img {
@@ -148,5 +148,5 @@ button:focus-visible {
 }
 
 .product-card {
-  background-color: #FFC9C9;
+  background-color: #fff;
 }
