@@ -6,6 +6,8 @@ export default function Home() {
   const [startIndex, setStartIndex] = useState(0);
   const [overlayColor, setOverlayColor] = useState('255,234,245');
   const [featured, setFeatured] = useState([]);
+  const [highlightCategory, setHighlightCategory] = useState('');
+  const [categoryProducts, setCategoryProducts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +19,20 @@ export default function Home() {
   useEffect(() => {
     axios.get('http://localhost:5000/api/products/featured')
       .then(res => setFeatured(res.data))
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/highlight-category')
+      .then(res => {
+        const cat = res.data?.category;
+        if (cat) {
+          setHighlightCategory(cat);
+          axios.get('http://localhost:5000/api/products', { params: { category: cat } })
+            .then(r => setCategoryProducts(r.data))
+            .catch(() => {});
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -228,6 +244,45 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {highlightCategory && (
+        <div className="featured-section mt-4">
+          <div className="container">
+            <h4 className="text-center mb-3">{highlightCategory}</h4>
+            <div className="row g-0 justify-content-center">
+              {Array.from({ length: 6 }).map((_, i) => {
+                const prod = categoryProducts[i];
+                if (!prod) {
+                  return (
+                    <div key={i} className="col-6 col-md-2">
+                      <div className="card h-100 featured-card" />
+                    </div>
+                  );
+                }
+                const images = prod.images || [];
+                const img = images.length > 0 ? images[Math.floor(Math.random() * images.length)] : null;
+                return (
+                  <div key={prod._id} className="col-6 col-md-2">
+                    <div
+                      className="card h-100 featured-card text-center"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => navigate(`/products/${prod._id}`)}
+                    >
+                      <div className="card-body d-flex flex-column align-items-center p-2">
+                        <h6 className="card-title mb-2">{prod.name}</h6>
+                        {img && (
+                          <img src={img} alt={prod.name} className="featured-img mb-2" style={{ objectFit: 'cover' }} />
+                        )}
+                        <p className="card-text mb-1">{prod.description}</p>
+                        <p className="card-text fw-bold mb-0">${prod.price}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

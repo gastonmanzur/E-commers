@@ -7,6 +7,7 @@ import productRoutes from './routes/productRoutes.js';
 import promoRoutes from './routes/promoRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import highlightRoutes from './routes/highlightRoutes.js';
 
 
 
@@ -33,6 +34,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/promotions', promoRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/highlight-category', highlightRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
