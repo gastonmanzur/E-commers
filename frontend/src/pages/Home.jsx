@@ -38,19 +38,30 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products')
-      .then(res => {
-        const products = res.data;
+    const fetchPreviews = async () => {
+      try {
+        const [prodRes, imgRes] = await Promise.all([
+          axios.get('http://localhost:5000/api/products'),
+          axios.get('http://localhost:5000/api/category-images'),
+        ]);
+        const products = prodRes.data;
+        const imgMap = imgRes.data.reduce((acc, cur) => {
+          acc[cur.category] = cur.image;
+          return acc;
+        }, {});
         const categories = Array.from(new Set(products.map(p => p.category).filter(Boolean)));
         const previews = categories.slice(0, 3).map(cat => {
           const catProducts = products.filter(p => p.category === cat);
-          const mainImage = catProducts[0]?.images?.[0] || null;
+          const mainImage = imgMap[cat] || catProducts[0]?.images?.[0] || null;
           const images = catProducts.slice(0, 4).map(p => p.images?.[0]).filter(Boolean);
           return { category: cat, mainImage, images };
         });
         setCategoryPreviews(previews);
-      })
-      .catch(() => {});
+      } catch {
+        // ignore
+      }
+    };
+    fetchPreviews();
   }, []);
 
   useEffect(() => {
