@@ -177,6 +177,11 @@ export default function Navbar() {
             </Link>
           </li>
           <li className="nav-item">
+            <Link className="nav-link" to="/admin/category">
+              Categoría destacada
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link className="nav-link" to="/admin/orders">
               Órdenes
             </Link>

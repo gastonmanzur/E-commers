@@ -8,7 +8,7 @@ const router = express.Router();
 // Obtener todos los productos
 router.get('/', async (req, res) => {
   try {
-    const { search, gender } = req.query;
+    const { search, gender, category } = req.query;
     let filter = {};
     if (search) {
       filter.$or = [
@@ -19,6 +19,9 @@ router.get('/', async (req, res) => {
     }
     if (gender && ['femenino','masculino','unisex'].includes(gender)) {
       filter.gender = gender;
+    }
+    if (category) {
+      filter.category = category;
     }
     const products = await Product.find(filter);
     res.json(products);
