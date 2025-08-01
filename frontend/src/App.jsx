@@ -14,7 +14,7 @@ import Navbar from './components/Navbar.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 
 export default function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [_token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
     const handler = () => setToken(localStorage.getItem('token'));

@@ -27,7 +27,7 @@ export default function Profile() {
       });
       localStorage.setItem('avatar', avatar);
       setMessage('Imagen actualizada');
-    } catch (err) {
+    } catch {
       setMessage('Error al actualizar');
     }
   };
