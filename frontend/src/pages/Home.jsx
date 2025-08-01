@@ -8,6 +8,7 @@ export default function Home() {
   const [featured, setFeatured] = useState([]);
   const [highlightCategory, setHighlightCategory] = useState('');
   const [categoryProducts, setCategoryProducts] = useState([]);
+  const [categoryPreviews, setCategoryPreviews] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +33,22 @@ export default function Home() {
             .then(r => setCategoryProducts(r.data))
             .catch(() => {});
         }
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/products')
+      .then(res => {
+        const products = res.data;
+        const categories = Array.from(new Set(products.map(p => p.category).filter(Boolean)));
+        const previews = categories.slice(0, 3).map(cat => {
+          const catProducts = products.filter(p => p.category === cat);
+          const mainImage = catProducts[0]?.images?.[0] || null;
+          const images = catProducts.slice(0, 4).map(p => p.images?.[0]).filter(Boolean);
+          return { category: cat, mainImage, images };
+        });
+        setCategoryPreviews(previews);
       })
       .catch(() => {});
   }, []);
@@ -282,6 +299,43 @@ export default function Home() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        </div>
+      )}
+      {categoryPreviews.length > 0 && (
+        <div className="featured-section mt-4">
+          <div className="container">
+            <div className="row g-3 justify-content-center">
+              {categoryPreviews.map(preview => (
+                <div key={preview.category} className="col-12 col-md-4">
+                  <div className="card h-100 category-card text-center">
+                    <div className="card-body d-flex flex-column p-2">
+                      <h6 className="card-title mb-2">{preview.category}</h6>
+                      {preview.mainImage && (
+                        <img
+                          src={preview.mainImage}
+                          alt={preview.category}
+                          className="category-main-img mb-2"
+                          style={{ objectFit: 'cover' }}
+                        />
+                      )}
+                      <div className="mt-auto d-flex flex-wrap justify-content-between gap-1">
+                        {preview.images.map((img, idx) => (
+                          <img
+                            key={idx}
+                            src={img}
+                            alt={`${preview.category}-${idx}`}
+                            className="category-thumb"
+                            style={{ objectFit: 'cover', cursor: 'pointer' }}
+                            onClick={() => navigate(`/products?category=${encodeURIComponent(preview.category)}`)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

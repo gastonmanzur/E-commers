@@ -45,9 +45,11 @@ export default function Products() {
     const params = new URLSearchParams(location.search);
     const term = params.get('search') || '';
     const gender = params.get('gender') || '';
+    const category = params.get('category') || '';
     const query = {};
     if (term) query.search = term;
     if (gender) query.gender = gender;
+    if (category) query.category = category;
     axios
       .get('http://localhost:5000/api/products', {
         params: query,
