@@ -327,11 +327,11 @@ export default function Home() {
                         <img
                           src={preview.mainImage}
                           alt={preview.category}
-                          className="category-main-img mb-2"
+                          className="category-main-img mb-1"
                           style={{ objectFit: 'cover' }}
                         />
                       )}
-                      <div className="mt-auto d-flex justify-content-between gap-1">
+                      <div className="d-flex justify-content-between gap-1 mt-1">
                         {preview.images.map((img, idx) => (
                           <img
                             key={idx}
