@@ -121,6 +121,40 @@ export default function Home() {
     (_, i) => promos[(startIndex + i) % promos.length],
   );
 
+  const renderCategoryCards = () => (
+    <div className="row g-3 justify-content-center">
+      {categoryPreviews.map(preview => (
+        <div key={preview.category} className="col-12 col-md-4">
+          <div className="card category-card text-center">
+            <div className="card-body d-flex flex-column p-2">
+              <h6 className="card-title mb-2">{preview.category}</h6>
+              {preview.mainImage && (
+                <img
+                  src={preview.mainImage}
+                  alt={preview.category}
+                  className="category-main-img mb-1"
+                  style={{ objectFit: 'cover' }}
+                />
+              )}
+              <div className="d-flex justify-content-between gap-1 mt-1 mb-0">
+                {preview.images.slice(0, 4).map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`${preview.category}-${idx}`}
+                    className="category-thumb"
+                    style={{ objectFit: 'cover', cursor: 'pointer' }}
+                    onClick={() => navigate(`/products?category=${encodeURIComponent(preview.category)}`)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <>
       <div className="carousel-wrapper">
@@ -328,82 +362,62 @@ export default function Home() {
           <div className="featured-section mt-4 mb-5">
             <div className="container">
               <h4 className="text-center mb-3">Categorías destacadas</h4>
-              <div className="row g-3 justify-content-center">
-                {categoryPreviews.map(preview => (
-                  <div key={preview.category} className="col-12 col-md-4">
-                    <div className="card category-card text-center">
-                      <div className="card-body d-flex flex-column p-2">
-                        <h6 className="card-title mb-2">{preview.category}</h6>
-                        {preview.mainImage && (
-                          <img
-                            src={preview.mainImage}
-                            alt={preview.category}
-                            className="category-main-img mb-1"
-                            style={{ objectFit: 'cover' }}
-                          />
-                        )}
-                        <div className="d-flex justify-content-between gap-1 mt-1 mb-0">
-                          {preview.images.slice(0, 4).map((img, idx) => (
-                            <img
-                              key={idx}
-                              src={img}
-                              alt={`${preview.category}-${idx}`}
-                              className="category-thumb"
-                              style={{ objectFit: 'cover', cursor: 'pointer' }}
-                              onClick={() => navigate(`/products?category=${encodeURIComponent(preview.category)}`)}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              {renderCategoryCards()}
             </div>
           </div>
-          {categoryPreviews.map(preview => (
-            <div key={`${preview.category}-products`} className="featured-section mt-4">
-              <div className="container">
-                <h4 className="text-center mb-3">{preview.category}</h4>
-                <div className="row g-0 justify-content-center">
-                  {Array.from({ length: 6 }).map((_, i) => {
-                    const prod = (productsByCategory[preview.category] || [])[i];
-                    if (!prod) {
+          {categoryPreviews.map((preview, idx) => (
+            <React.Fragment key={`${preview.category}-group`}>
+              <div className="featured-section mt-4">
+                <div className="container">
+                  <h4 className="text-center mb-3">{preview.category}</h4>
+                  <div className="row g-0 justify-content-center">
+                    {Array.from({ length: 6 }).map((_, i) => {
+                      const prod = (productsByCategory[preview.category] || [])[i];
+                      if (!prod) {
+                        return (
+                          <div key={i} className="col-6 col-md-2">
+                            <div className="card h-100 featured-card" />
+                          </div>
+                        );
+                      }
+                      const images = prod.images || [];
+                      const img = images.length > 0 ? images[Math.floor(Math.random() * images.length)] : null;
                       return (
-                        <div key={i} className="col-6 col-md-2">
-                          <div className="card h-100 featured-card" />
-                        </div>
-                      );
-                    }
-                    const images = prod.images || [];
-                    const img = images.length > 0 ? images[Math.floor(Math.random() * images.length)] : null;
-                    return (
-                      <div key={prod._id} className="col-6 col-md-2">
-                        <div
-                          className="card h-100 featured-card text-center"
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => navigate(`/products/${prod._id}`)}
-                        >
-                          <div className="card-body d-flex flex-column align-items-center p-2">
-                            <h6 className="card-title mb-2">{prod.name}</h6>
-                            {img && (
-                              <img
-                                src={img}
-                                alt={prod.name}
-                                className="featured-img mb-2"
-                                style={{ objectFit: 'cover' }}
-                              />
-                            )}
-                            <p className="card-text mb-1">{prod.description}</p>
-                            <p className="card-text fw-bold mb-0">${prod.price}</p>
+                        <div key={prod._id} className="col-6 col-md-2">
+                          <div
+                            className="card h-100 featured-card text-center"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => navigate(`/products/${prod._id}`)}
+                          >
+                            <div className="card-body d-flex flex-column align-items-center p-2">
+                              <h6 className="card-title mb-2">{prod.name}</h6>
+                              {img && (
+                                <img
+                                  src={img}
+                                  alt={prod.name}
+                                  className="featured-img mb-2"
+                                  style={{ objectFit: 'cover' }}
+                                />
+                              )}
+                              <p className="card-text mb-1">{prod.description}</p>
+                              <p className="card-text fw-bold mb-0">${prod.price}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
+              {idx === 0 && (
+                <div className="featured-section-alt mt-4 mb-5">
+                  <div className="container">
+                    <h4 className="text-center mb-3">Categorías destacadas</h4>
+                    {renderCategoryCards()}
+                  </div>
+                </div>
+              )}
+            </React.Fragment>
           ))}
         </>
       )}
