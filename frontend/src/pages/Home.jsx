@@ -242,7 +242,7 @@ export default function Home() {
       <div className="featured-section mt-4">
         <div className="container">
           <div className="row g-0 justify-content-center">
-            {Array.from({ length: 18 }).map((_, i) => {
+            {Array.from({ length: 6 }).map((_, i) => {
               const prod = featured[i];
               if (!prod) {
                 return (
