@@ -10,6 +10,7 @@ export default function Home() {
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [categoryPreviews, setCategoryPreviews] = useState([]);
   const [productsByCategory, setProductsByCategory] = useState({});
+  const rowColors = ['#C9E4FF', '#FFD6A5', '#CDEAC0', '#FFC8DD'];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -123,35 +124,39 @@ export default function Home() {
 
   const renderCategoryCards = () => (
     <div className="row g-3 justify-content-center">
-      {categoryPreviews.map(preview => (
-        <div key={preview.category} className="col-12 col-md-4">
-          <div className="card category-card text-center">
-            <div className="card-body d-flex flex-column p-2">
-              <h6 className="card-title mb-2">{preview.category}</h6>
-              {preview.mainImage && (
-                <img
-                  src={preview.mainImage}
-                  alt={preview.category}
-                  className="category-main-img mb-1"
-                  style={{ objectFit: 'cover' }}
-                />
-              )}
-              <div className="d-flex justify-content-between gap-1 mt-1 mb-0">
-                {preview.images.slice(0, 4).map((img, idx) => (
+      {categoryPreviews.map((preview, index) => {
+        const rowIndex = Math.floor(index / 3);
+        const bgColor = rowColors[rowIndex % rowColors.length];
+        return (
+          <div key={preview.category} className="col-12 col-md-4">
+            <div className="card category-card text-center" style={{ '--category-card-bg': bgColor }}>
+              <div className="card-body d-flex flex-column p-2">
+                <h6 className="card-title mb-2">{preview.category}</h6>
+                {preview.mainImage && (
                   <img
-                    key={idx}
-                    src={img}
-                    alt={`${preview.category}-${idx}`}
-                    className="category-thumb"
-                    style={{ objectFit: 'cover', cursor: 'pointer' }}
-                    onClick={() => navigate(`/products?category=${encodeURIComponent(preview.category)}`)}
+                    src={preview.mainImage}
+                    alt={preview.category}
+                    className="category-main-img mb-1"
+                    style={{ objectFit: 'cover' }}
                   />
-                ))}
+                )}
+                <div className="d-flex justify-content-between gap-1 mt-1 mb-0">
+                  {preview.images.slice(0, 4).map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={img}
+                      alt={`${preview.category}-${idx}`}
+                      className="category-thumb"
+                      style={{ objectFit: 'cover', cursor: 'pointer' }}
+                      onClick={() => navigate(`/products?category=${encodeURIComponent(preview.category)}`)}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 

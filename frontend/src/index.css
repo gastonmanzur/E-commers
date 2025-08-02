@@ -139,7 +139,7 @@ button:focus-visible {
   border: none;
   border-radius: 0;
   box-shadow: none;
-  background-color: #C9E4FF;
+  background-color: var(--category-card-bg, #C9E4FF);
 }
 
 .category-card .card-title {
