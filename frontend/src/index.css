@@ -129,7 +129,7 @@ button:focus-visible {
 
 .category-card {
   width: 100%;
-  min-height: 260px;
+  height: 220px;
   border: none;
   border-radius: 0;
   box-shadow: none;
