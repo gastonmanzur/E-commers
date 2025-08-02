@@ -315,7 +315,7 @@ export default function Home() {
         </div>
       )}
       {categoryPreviews.length > 0 && (
-        <div className="featured-section mt-4">
+        <div className="featured-section mt-4 mb-5">
           <div className="container">
             <div className="row g-3 justify-content-center">
               {categoryPreviews.map(preview => (
@@ -354,7 +354,7 @@ export default function Home() {
       {featured.length > 6 && (
         <div className="featured-section mt-5">
           <div className="container">
-            <div className="row g-0 justify-content-center mb-4">
+            <div className="row g-3 justify-content-center mb-4">
               {Array.from({ length: 6 }).map((_, i) => {
                 const prod = featured[6 + i];
                 if (!prod) {
@@ -386,7 +386,7 @@ export default function Home() {
                 );
               })}
             </div>
-            <div className="row g-0 justify-content-center">
+            <div className="row g-3 justify-content-center">
               {Array.from({ length: 6 }).map((_, i) => {
                 const prod = featured[12 + i];
                 if (!prod) {
