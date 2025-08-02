@@ -327,6 +327,7 @@ export default function Home() {
         <>
           <div className="featured-section mt-4 mb-5">
             <div className="container">
+              <h4 className="text-center mb-3">Categorías destacadas</h4>
               <div className="row g-3 justify-content-center">
                 {categoryPreviews.map(preview => (
                   <div key={preview.category} className="col-12 col-md-4">
