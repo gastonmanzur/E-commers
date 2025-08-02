@@ -320,8 +320,8 @@ export default function Home() {
             <div className="row g-3 justify-content-center">
               {categoryPreviews.map(preview => (
                 <div key={preview.category} className="col-12 col-md-4">
-                  <div className="card h-100 category-card text-center">
-                    <div className="card-body d-flex flex-column p-2 h-100">
+                  <div className="card category-card text-center">
+                    <div className="card-body d-flex flex-column p-2">
                       <h6 className="card-title mb-2">{preview.category}</h6>
                       {preview.mainImage && (
                         <img
