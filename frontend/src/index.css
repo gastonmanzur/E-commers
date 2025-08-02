@@ -133,12 +133,12 @@ button:focus-visible {
   border: none;
   border-radius: 0;
   box-shadow: none;
-  background-color: #FFC9C9;
+  background-color: #C9E4FF;
 }
 
 .category-card .card-title {
   font-size: 1.25rem;
-  color: #fff;
+  color: #333;
 }
 
 .category-main-img {
