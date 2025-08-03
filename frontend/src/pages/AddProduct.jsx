@@ -14,6 +14,7 @@ export default function AddProduct() {
     gender: 'unisex',
     inStock: true,
     stock: 0,
+    allowReservation: false,
   });
   const navigate = useNavigate();
 
@@ -46,6 +47,7 @@ export default function AddProduct() {
         gender: form.gender,
         inStock: form.inStock,
         stock: Number(form.stock),
+        allowReservation: form.allowReservation,
       }, { headers: { Authorization: `Bearer ${token}` } });
       alert('Producto creado');
       navigate('/products');
@@ -105,6 +107,18 @@ export default function AddProduct() {
           <input className="form-check-input" type="checkbox" checked={form.inStock}
             onChange={(e) => setForm({ ...form, inStock: e.target.checked })} id="instock" />
           <label className="form-check-label" htmlFor="instock">En stock</label>
+        </div>
+        <div className="form-check mb-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="allowReserve"
+            checked={form.allowReservation}
+            onChange={(e) => setForm({ ...form, allowReservation: e.target.checked })}
+          />
+          <label className="form-check-label" htmlFor="allowReserve">
+            Permitir reservas sin stock
+          </label>
         </div>
         <button type="submit" className="btn btn-primary">Guardar</button>
       </form>
