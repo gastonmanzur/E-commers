@@ -10,7 +10,7 @@ export default function Home() {
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [categoryPreviews, setCategoryPreviews] = useState([]);
   const [productsByCategory, setProductsByCategory] = useState({});
-  const rowColors = ['#C9E4FF', '#FFD6A5', '#CDEAC0', '#FFC8DD'];
+  const rowColors = ['#C9E4FF', '#FFFF00', '#CDEAC0', '#FFC8DD'];
   const navigate = useNavigate();
 
   useEffect(() => {
