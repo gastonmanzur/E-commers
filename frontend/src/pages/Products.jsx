@@ -150,6 +150,10 @@ export default function Products() {
     }
     const qty = Number(quantities[prod._id] || 1);
     if (qty <= 0) return;
+    const confirmed = window.confirm(
+      'Advertencia: su producto puede tardar hasta 5 días hábiles en ser despachado. La empresa hará lo necesario para que le llegue lo antes posible. ¿Desea confirmar la reserva?'
+    );
+    if (!confirmed) return;
     await reserveItem(prod, qty);
     setQuantities(q => ({ ...q, [prod._id]: 1 }));
   };

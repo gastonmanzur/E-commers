@@ -45,6 +45,10 @@ export default function ProductDetail() {
     }
     const quantity = Number(qty);
     if (quantity <= 0) return;
+    const confirmed = window.confirm(
+      'Advertencia: su producto puede tardar hasta 5 días hábiles en ser despachado. La empresa hará lo necesario para que le llegue lo antes posible. ¿Desea confirmar la reserva?'
+    );
+    if (!confirmed) return;
     await reserveItem(product, quantity);
     setQty(1);
   };
