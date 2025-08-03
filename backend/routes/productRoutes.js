@@ -53,9 +53,9 @@ router.get('/:id', async (req, res) => {
 
 // Crear un nuevo producto
 router.post('/', protect, isAdmin, async (req, res) => {
-  const { name, description, price, images = [], category, gender = 'unisex', inStock, stock } = req.body;
+  const { name, description, price, images = [], category, gender = 'unisex', inStock, stock, allowReservation } = req.body;
   if (images.length > 3) return res.status(400).json({ message: 'Máximo 3 imágenes' });
-  const product = new Product({ name, description, price, images, category, gender, inStock, stock });
+  const product = new Product({ name, description, price, images, category, gender, inStock, stock, allowReservation });
 
   try {
     const newProduct = await product.save();
@@ -103,7 +103,7 @@ router.put('/:id/featured', protect, isAdmin, async (req, res) => {
 
 // Actualizar un producto
 router.put('/:id', protect, isAdmin, async (req, res) => {
-  const { name, description, price, images = [], category, gender = 'unisex', inStock, stock } = req.body;
+  const { name, description, price, images = [], category, gender = 'unisex', inStock, stock, allowReservation } = req.body;
   if (images.length > 3) return res.status(400).json({ message: 'Máximo 3 imágenes' });
   try {
     const product = await Product.findById(req.params.id);
@@ -116,6 +116,7 @@ router.put('/:id', protect, isAdmin, async (req, res) => {
     product.gender = gender;
     product.inStock = inStock;
     if (stock !== undefined) product.stock = stock;
+    if (allowReservation !== undefined) product.allowReservation = allowReservation;
     const updated = await product.save();
     res.json(updated);
   } catch (err) {

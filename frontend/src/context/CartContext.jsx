@@ -41,17 +41,29 @@ export function CartProvider({ children }) {
   const addItem = async (product, quantity) => {
     await axios.patch(`http://localhost:5000/api/products/${product._id}/stock`, { change: -quantity });
     setItems(prev => {
-      const existing = prev.find(i => i.product._id === product._id);
+      const existing = prev.find(i => i.product._id === product._id && !i.reserved);
       if (existing) {
-        return prev.map(i => i.product._id === product._id ? { ...i, quantity: i.quantity + quantity } : i);
+        return prev.map(i => i.product._id === product._id && !i.reserved ? { ...i, quantity: i.quantity + quantity } : i);
       }
-      return [...prev, { product, quantity }];
+      return [...prev, { product, quantity, reserved: false }];
     });
   };
 
-  const removeItem = async (productId, quantity) => {
-    await axios.patch(`http://localhost:5000/api/products/${productId}/stock`, { change: quantity });
-    setItems(prev => prev.filter(i => i.product._id !== productId));
+  const reserveItem = (product, quantity) => {
+    setItems(prev => {
+      const existing = prev.find(i => i.product._id === product._id && i.reserved);
+      if (existing) {
+        return prev.map(i => i.product._id === product._id && i.reserved ? { ...i, quantity: i.quantity + quantity } : i);
+      }
+      return [...prev, { product, quantity, reserved: true }];
+    });
+  };
+
+  const removeItem = async (productId, quantity, reserved) => {
+    if (!reserved) {
+      await axios.patch(`http://localhost:5000/api/products/${productId}/stock`, { change: quantity });
+    }
+    setItems(prev => prev.filter(i => !(i.product._id === productId && i.reserved === reserved)));
   };
 
   const clearCart = () => {
@@ -62,7 +74,7 @@ export function CartProvider({ children }) {
   const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, clearCart, total }}>
+    <CartContext.Provider value={{ items, addItem, reserveItem, removeItem, clearCart, total }}>
       {children}
     </CartContext.Provider>
   );

@@ -18,12 +18,13 @@ export default function Products() {
     gender: 'unisex',
     inStock: true,
     stock: 0,
+    allowReservation: false,
   });
   const [stockProduct, setStockProduct] = useState(null);
   const [newStock, setNewStock] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-  const { addItem } = useContext(CartContext);
+  const { addItem, reserveItem } = useContext(CartContext);
   const role = localStorage.getItem('role');
 
   const uploadImage = async (file, field) => {
@@ -89,6 +90,7 @@ export default function Products() {
       gender: prod.gender || 'unisex',
       inStock: prod.inStock,
       stock: prod.stock || 0,
+      allowReservation: prod.allowReservation || false,
     });
     setEditProduct(prod);
   };
@@ -109,6 +111,7 @@ export default function Products() {
           gender: editForm.gender,
           inStock: editForm.inStock,
           stock: Number(editForm.stock),
+          allowReservation: editForm.allowReservation,
         },
         { headers: { Authorization: `Bearer ${token}` } });
       setProducts(prev => prev.map(p => p._id === res.data._id ? res.data : p));
@@ -136,6 +139,19 @@ export default function Products() {
     } catch (err) {
       alert(err.response?.data?.message || 'Error al actualizar stock');
     }
+  };
+
+  const handleReserve = async (prod) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Debes iniciar sesión para reservar productos');
+      navigate('/login');
+      return;
+    }
+    const qty = Number(quantities[prod._id] || 1);
+    if (qty <= 0) return;
+    await reserveItem(prod, qty);
+    setQuantities(q => ({ ...q, [prod._id]: 1 }));
   };
 
   const handleDelete = async (prodId) => {
@@ -206,6 +222,9 @@ export default function Products() {
                   )}
                 </div>
               )}
+              <div className={`stock-ribbon ${prod.stock > 0 ? 'ribbon-green' : 'ribbon-red'}`}>
+                <span>{prod.stock > 0 ? 'En Stock' : 'Sin Stock'}</span>
+              </div>
               <div className="card-body">
                 <h5 className="card-title">{prod.name}</h5>
                 <p className="card-text">${prod.price}</p>
@@ -215,17 +234,33 @@ export default function Products() {
                     value={quantities[prod._id] || 1}
                     onChange={e => setQuantities(q => ({ ...q, [prod._id]: e.target.value }))} onClick={e=>e.stopPropagation()} />
                 </div>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  disabled={!localStorage.getItem('token')}
-                  onClick={e => {
-                    e.stopPropagation();
-                    handleAdd(prod);
-                  }}
-                >
-                  Agregar al carrito
-                </button>
+                {prod.stock > 0 ? (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    disabled={!localStorage.getItem('token')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleAdd(prod);
+                    }}
+                  >
+                    Agregar al carrito
+                  </button>
+                ) : prod.allowReservation ? (
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    disabled={!localStorage.getItem('token')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleReserve(prod);
+                    }}
+                  >
+                    Reservar
+                  </button>
+                ) : (
+                  <button type="button" className="btn btn-secondary" disabled>Sin stock</button>
+                )}
                 {role === 'admin' && (
                   <div className="mt-2">
                     <button
@@ -332,6 +367,11 @@ export default function Products() {
                     <input className="form-check-input" type="checkbox" id="inStockEdit" checked={editForm.inStock}
                       onChange={e => setEditForm({ ...editForm, inStock: e.target.checked })} />
                     <label className="form-check-label" htmlFor="inStockEdit">En stock</label>
+                  </div>
+                  <div className="form-check">
+                    <input className="form-check-input" type="checkbox" id="allowReserveEdit" checked={editForm.allowReservation}
+                      onChange={e => setEditForm({ ...editForm, allowReservation: e.target.checked })} />
+                    <label className="form-check-label" htmlFor="allowReserveEdit">Permitir reservas sin stock</label>
                   </div>
                 </div>
                 <div className="modal-footer">
