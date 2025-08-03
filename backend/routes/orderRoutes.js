@@ -13,10 +13,10 @@ router.post('/', protect, async (req, res) => {
     return res.status(400).json({ message: 'Sin items' });
   }
   try {
-    const populated = await Promise.all(items.map(async ({ product, quantity }) => {
+    const populated = await Promise.all(items.map(async ({ product, quantity, reserved }) => {
       const prod = await Product.findById(product);
       if (!prod) throw new Error('Producto no encontrado');
-      return { product: prod._id, quantity, price: prod.price };
+      return { product: prod._id, quantity, price: prod.price, reserved };
     }));
     const total = populated.reduce((sum, i) => sum + i.price * i.quantity, 0);
     const order = await Order.create({ user: req.user._id, items: populated, total });

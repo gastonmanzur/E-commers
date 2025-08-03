@@ -12,7 +12,7 @@ export default function Cart() {
     const token = localStorage.getItem('token');
     try {
       await axios.post('http://localhost:5000/api/orders', {
-        items: items.map(i => ({ product: i.product._id, quantity: i.quantity }))
+        items: items.map(i => ({ product: i.product._id, quantity: i.quantity, reserved: i.reserved }))
       }, { headers: { Authorization: `Bearer ${token}` } });
       alert('Orden creada');
       clearCart();
@@ -47,7 +47,7 @@ export default function Cart() {
                 </div>
                 <div>
                   <span className="me-2">${item.product.price * item.quantity}</span>
-                  <button className="btn btn-sm btn-danger" onClick={() => removeItem(item.product._id, item.quantity)}>X</button>
+                  <button className="btn btn-sm btn-danger" onClick={() => removeItem(item.product._id, item.quantity, item.reserved)}>X</button>
                 </div>
               </li>
             ))}

@@ -4,6 +4,7 @@ const itemSchema = new mongoose.Schema({
   product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
+  reserved: { type: Boolean, default: false },
 });
 
 const orderSchema = new mongoose.Schema({
