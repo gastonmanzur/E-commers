@@ -170,17 +170,17 @@ button:focus-visible {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 75px;
-  height: 75px;
+  width: 90px;
+  height: 90px;
   overflow: hidden;
 }
 
 .stock-ribbon span {
   position: absolute;
   bottom: 6px;
-  right: -28px;
+  right: -38px;
   display: block;
-  width: 100px;
+  width: 120px;
   padding: 5px 0;
   color: #fff;
   text-align: center;
