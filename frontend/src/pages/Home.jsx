@@ -11,6 +11,7 @@ export default function Home() {
   const [categoryPreviews, setCategoryPreviews] = useState([]);
   const [productsByCategory, setProductsByCategory] = useState({});
   const rowColors = ['#C9E4FF', '#FFFF00', '#CDEAC0', '#FFC8DD'];
+  const [colorIndex, setColorIndex] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -111,6 +112,13 @@ export default function Home() {
     return () => carouselElement.removeEventListener('slid.bs.carousel', updateOverlayColor);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setColorIndex(prev => (prev + 1) % rowColors.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [rowColors.length]);
+
   const handleNext = () => {
     if (promos.length > 6) {
       setStartIndex((prev) => (prev + 6) % promos.length);
@@ -126,7 +134,7 @@ export default function Home() {
     <div className="row g-3 justify-content-center">
       {categoryPreviews.map((preview, index) => {
         const rowIndex = Math.floor(index / 3);
-        const bgColor = rowColors[rowIndex % rowColors.length];
+        const bgColor = rowColors[(rowIndex + colorIndex) % rowColors.length];
         return (
           <div key={preview.category} className="col-12 col-md-4">
             <div className="card category-card text-center" style={{ '--category-card-bg': bgColor }}>

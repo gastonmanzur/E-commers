@@ -140,6 +140,7 @@ button:focus-visible {
   border-radius: 0;
   box-shadow: none;
   background-color: var(--category-card-bg, #C9E4FF);
+  transition: background-color 0.5s ease;
 }
 
 .category-card .card-title {
