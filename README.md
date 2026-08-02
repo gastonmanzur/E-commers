@@ -8,10 +8,23 @@ JWT_SECRET=<secreto para JWT>
 EMAIL_USER=<usuario de correo para enviar verificaciones>
 EMAIL_PASS=<contraseña del correo>
 BASE_URL=<url pública del frontend>
-ADMIN_CODE=<código especial para crear administradores>
 ```
 
-Si al registrarse se proporciona un código que coincida con `ADMIN_CODE`, el usuario será creado con el rol de administrador.
+Todas las cuentas creadas mediante el registro público, incluido el acceso con
+Google, reciben el rol `cliente`. No existe un código, formulario ni endpoint
+público para crear administradores.
+
+## Administradores
+
+La creación de administradores se realiza de forma controlada por una persona con
+acceso autorizado a MongoDB Atlas o Compass. Para promover a un usuario existente,
+modifica únicamente su campo `role` de `"cliente"` a `"admin"`. No modifiques
+automáticamente el campo `verified` ni otros datos de la cuenta.
+
+Después del cambio, el usuario debe cerrar sesión y volver a ingresar para que el
+frontend reciba el rol actualizado. El mismo procedimiento permite conservar y
+administrar los roles de los administradores existentes sin exponer su asignación
+en el registro público.
 
 Tras registrarte recibirás un correo con un enlace para verificar tu cuenta. Hasta que no confirmes tu email no podrás iniciar sesión.
 
@@ -35,4 +48,3 @@ Para evitar el aviso `Cross-Origin-Opener-Policy policy would block the window.p
 cd frontend
 npm run dev
 ```
-

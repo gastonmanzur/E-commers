@@ -13,6 +13,7 @@ import AdminCategory from './pages/AdminCategory.jsx';
 import Cart from './pages/Cart.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
+import AdminRoute from './components/AdminRoute.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 
 export default function App() {
@@ -35,10 +36,12 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetail />} />
-            <Route path="/add-product" element={<AddProduct />} />
-            <Route path="/admin/promos" element={<AdminPromos />} />
-            <Route path="/admin/category" element={<AdminCategory />} />
-            <Route path="/admin/orders" element={<AdminOrders />} />
+            <Route element={<AdminRoute />}>
+              <Route path="/add-product" element={<AddProduct />} />
+              <Route path="/admin/promos" element={<AdminPromos />} />
+              <Route path="/admin/category" element={<AdminCategory />} />
+              <Route path="/admin/orders" element={<AdminOrders />} />
+            </Route>
             <Route path="/cart" element={<Cart />} />
           </Routes>
           <Footer />
