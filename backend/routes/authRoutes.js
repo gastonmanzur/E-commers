@@ -16,7 +16,7 @@ const generateToken = (id) => {
 
 // Registro de usuario
 router.post('/register', async (req, res) => {
-  const { name, email, password, confirmPassword, adminCode, avatar } = req.body;
+  const { name, email, password, confirmPassword, avatar } = req.body;
   try {
     const exists = await User.findOne({ email });
     if (exists) return res.status(400).json({ message: 'El usuario ya existe' });
@@ -25,8 +25,13 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Las contrase\u00f1as no coinciden' });
     }
 
-  const role = adminCode && adminCode === process.env.ADMIN_CODE ? 'admin' : 'cliente';
-  const user = await User.create({ name, email, password, role, avatar });
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: 'cliente',
+      avatar,
+    });
 
     const verifyToken = generateToken(user._id);
     const url = `${process.env.BASE_URL}/api/users/verify/${verifyToken}`;
@@ -107,7 +112,14 @@ router.post('/google-login', async (req, res) => {
 
   let user = await User.findOne({ email });
   if (!user) {
-    user = await User.create({ name, email, password: jwt.sign({ email }, process.env.JWT_SECRET), verified: true, avatar: payload.picture });
+    user = await User.create({
+      name,
+      email,
+      password: jwt.sign({ email }, process.env.JWT_SECRET),
+      role: 'cliente',
+      verified: true,
+      avatar: payload.picture,
+    });
   } else {
     if (!user.verified) {
       user.verified = true;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Register() {
-  const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '', adminCode: '', avatar: '' });
+  const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '', avatar: '' });
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -69,14 +69,6 @@ export default function Register() {
                 placeholder="URL de avatar (opcional)"
                 value={form.avatar}
                 onChange={(e) => setForm({ ...form, avatar: e.target.value })}
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                className="form-control"
-                placeholder="Código de administrador (opcional)"
-                value={form.adminCode}
-                onChange={(e) => setForm({ ...form, adminCode: e.target.value })}
               />
             </div>
             <button type="submit" className="btn btn-primary w-100 mb-2">
