@@ -8,7 +8,37 @@ JWT_SECRET=<secreto para JWT>
 EMAIL_USER=<usuario de correo para enviar verificaciones>
 EMAIL_PASS=<contraseña del correo>
 BASE_URL=<url pública del frontend>
+GOOGLE_CLIENT_ID=<OAuth Web Client ID de Google>
 ```
+
+El frontend utiliza el mismo identificador en `frontend/.env.local`:
+
+```env
+VITE_GOOGLE_CLIENT_ID=<OAuth Web Client ID de Google>
+```
+
+Las variables `VITE_*` son públicas en el navegador por diseño. No configures ni
+expongas un Client Secret en el frontend. Después de cambiar cualquiera de estos
+archivos, reinicia tanto Vite como Express para que lean los valores nuevos.
+
+## Configuración de inicio de sesión con Google
+
+1. Entra en Google Cloud Console y selecciona o crea un proyecto.
+2. Configura Google Auth Platform/Branding y la pantalla de consentimiento.
+3. Crea un OAuth Client ID de tipo **Web application**.
+4. Agrega `http://localhost:5173` a **Authorized JavaScript origins**. Si abres
+   la aplicación con esa dirección, agrega también y por separado
+   `http://127.0.0.1:5173`.
+5. No agregues rutas como `/login` a los orígenes. Tampoco agregues
+   `http://localhost:5000`, salvo que el frontend realmente se sirva desde allí.
+6. Este proyecto usa el modo popup con callback JavaScript: no inventes un
+   redirect URI.
+7. Si la aplicación está en estado **Testing**, agrega como usuarios de prueba
+   las cuentas de Google que deban ingresar.
+8. Copia el mismo Client ID, terminado en `.apps.googleusercontent.com`, en
+   `frontend/.env.local` como `VITE_GOOGLE_CLIENT_ID` y en `backend/.env` como
+   `GOOGLE_CLIENT_ID`.
+9. Reinicia los procesos de Vite y Express.
 
 Todas las cuentas creadas mediante el registro público, incluido el acceso con
 Google, reciben el rol `cliente`. No existe un código, formulario ni endpoint

@@ -102,31 +102,52 @@ router.post('/login', async (req, res) => {
 
 // Login con Google
 router.post('/google-login', async (req, res) => {
-  const { token } = req.body;
-  try {
-    const client = new OAuth2Client();
-    const ticket = await client.verifyIdToken({ idToken: token });
-    const payload = ticket.getPayload();
-    const email = payload.email;
-    const name = payload.name;
+  const { token } = req.body || {};
 
-  let user = await User.findOne({ email });
-  if (!user) {
-    user = await User.create({
-      name,
-      email,
-      password: jwt.sign({ email }, process.env.JWT_SECRET),
-      role: 'cliente',
-      verified: true,
-      avatar: payload.picture,
-    });
-  } else {
-    if (!user.verified) {
-      user.verified = true;
-    }
-    user.avatar = payload.picture;
-    await user.save();
+  if (!token) {
+    return res.status(400).json({ message: 'La credencial de Google es obligatoria' });
   }
+  const googleClientId = process.env.GOOGLE_CLIENT_ID;
+  if (!googleClientId) {
+    return res.status(503).json({ message: 'El inicio de sesión con Google no está configurado' });
+  }
+
+  let payload;
+  try {
+    const client = new OAuth2Client(googleClientId);
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: googleClientId,
+    });
+    payload = ticket.getPayload();
+  } catch {
+    return res.status(401).json({ message: 'Token de Google inválido' });
+  }
+
+  if (!payload?.email || payload.email_verified !== true) {
+    return res.status(401).json({ message: 'Token de Google inválido' });
+  }
+
+  const { email, name } = payload;
+
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        password: jwt.sign({ email }, process.env.JWT_SECRET),
+        role: 'cliente',
+        verified: true,
+        avatar: payload.picture,
+      });
+    } else {
+      if (!user.verified) {
+        user.verified = true;
+      }
+      user.avatar = payload.picture;
+      await user.save();
+    }
 
     res.json({
       _id: user._id,
@@ -136,8 +157,8 @@ router.post('/google-login', async (req, res) => {
       avatar: user.avatar,
       token: generateToken(user._id),
     });
-  } catch (err) {
-    res.status(400).json({ message: 'Token de Google inválido' });
+  } catch {
+    res.status(500).json({ message: 'Error interno al iniciar sesión con Google' });
   }
 });
 
